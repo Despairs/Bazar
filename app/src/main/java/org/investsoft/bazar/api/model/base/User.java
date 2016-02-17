@@ -12,6 +12,18 @@ public class User {
     private String surname;
     private String phone;
 
+    public User() {
+
+    }
+
+    public User(String lastname, String surname, String name, String email, String phone) {
+        this.lastname = lastname;
+        this.surname = surname;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+    }
+
     public String getEmail() {
         return email;
     }

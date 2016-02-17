@@ -6,6 +6,7 @@ import org.investsoft.bazar.action.common.AsyncResult;
 import org.investsoft.bazar.action.common.IActivityContext;
 import org.investsoft.bazar.api.ApiClient;
 import org.investsoft.bazar.api.model.ApiException;
+import org.investsoft.bazar.api.model.post.RegistrationRequest;
 import org.investsoft.bazar.api.model.post.RegistrationResponse;
 
 /**
@@ -41,7 +42,8 @@ public class RegistrationTask extends AsyncTask<Void, Void, AsyncResult> {
         ApiClient api = null;
         try {
             api = new ApiClient(caller.getContext());
-            RegistrationResponse resp = api.registration(lastname, name, surname, phone, email, password);
+            RegistrationRequest req = new RegistrationRequest(lastname, name, surname, phone, email, password);
+            RegistrationResponse resp = api.registration(req);
             if (resp.getCode() != 0) {
                 throw new ApiException(resp.getMessage(), resp.getCode());
             }

@@ -12,9 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.investsoft.bazar.R;
+import org.investsoft.bazar.action.workflow.WorkflowActivity;
 import org.investsoft.bazar.action.common.AsyncActivity;
 import org.investsoft.bazar.action.common.AsyncResult;
-import org.investsoft.bazar.action.common.MainActivity;
 import org.investsoft.bazar.action.registration.RegistrationActivity;
 
 
@@ -113,7 +113,7 @@ public class LoginActivity extends AsyncActivity implements AuthenticationTask.I
     public void processAuthResult(AsyncResult result) {
         showProgress(false);
         if (result.isSuccess()) {
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            Intent i = new Intent(getApplicationContext(), WorkflowActivity.class);
             startActivity(i);
             finish();
         } else {

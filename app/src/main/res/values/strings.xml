@@ -12,23 +12,36 @@
     <string name="email">Email</string>
     <string name="password">Пароль</string>
     <string name="passcode">Введите код блокировки</string>
-    <!-- Strings related to login -->
+    <!-- Strings related to buttons -->
     <string name="action_sign_in">Войти</string>
     <string name="action_registration">Зарегистрироваться</string>
+    <string name="action_update_info">Обновить информацию</string>
     <!-- Strings related to registration -->
     <string name="title_activity_registration">Регистрация</string>
-    <string name="reg_lastname">Фамилия</string>
-    <string name="reg_name">Имя</string>
-    <string name="reg_surname">Отчество</string>
-    <string name="reg_phone">Телефон</string>
+    <!-- Strings related to user -->
+    <string name="lastname">Фамилия</string>
+    <string name="name">Имя</string>
+    <string name="surname">Отчество</string>
+    <string name="phone">Телефон</string>
     <!-- Strings related to async tasks -->
     <string name="async_common">Пожалуйста, подождите</string>
     <string name="async_reg">Создание пользователя</string>
     <string name="async_auth">Проверка учетных данных</string>
+    <!-- Strings related to fast popup messages -->
+    <string name="toast_update_user_info">Пользовательские данные обновлены</string>
     <!-- Strings related to errors -->
     <string name="error_invalid_user_info">Потеряна информация о пользователе. Перелогиньтесь</string>
     <string name="error_incorrect_password">Неправильный пароль</string>
     <string name="error_field_required">Поле обязательно для заполнения</string>
     <string name="error_invalid_email">Email не корректен</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Strings related to menus -->
+    <string name="menu_additional">Дополнительно</string>
+    <string name="menu_additional_settings">Настройки</string>
+    <string name="menu_user">Пользователь</string>
+    <string name="menu_user_about">Обо мне</string>
 
 </resources>

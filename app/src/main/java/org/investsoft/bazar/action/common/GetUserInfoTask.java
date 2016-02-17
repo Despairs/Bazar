@@ -7,6 +7,7 @@ import org.investsoft.bazar.R;
 import org.investsoft.bazar.api.ApiClient;
 import org.investsoft.bazar.api.model.ApiException;
 import org.investsoft.bazar.api.model.base.User;
+import org.investsoft.bazar.api.model.get.GetUserInfoRequest;
 import org.investsoft.bazar.api.model.get.GetUserInfoResponse;
 import org.investsoft.bazar.utils.JsonHelper;
 
@@ -47,7 +48,8 @@ public class GetUserInfoTask extends AsyncTask<Void, Void, GetUserInfoAsyncResul
             try {
                 api = new ApiClient(caller.getContext());
                 if (sessionId != null) {
-                    GetUserInfoResponse resp = api.getUserInfo(sessionId, userId);
+                    GetUserInfoRequest req = new GetUserInfoRequest(sessionId, userId);
+                    GetUserInfoResponse resp = api.getUserInfo(req);
                     if (resp.getCode() != 0) {
                         throw new ApiException(resp.getMessage(), resp.getCode());
                     }

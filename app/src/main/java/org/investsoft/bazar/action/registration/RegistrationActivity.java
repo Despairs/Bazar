@@ -37,11 +37,11 @@ public class RegistrationActivity extends AsyncActivity implements RegistrationT
         setContentView(R.layout.activity_registration);
 
         // Set up the login form.
-        nameView = (EditText) findViewById(R.id.reg_name);
-        lastnameView = (EditText) findViewById(R.id.reg_lastname);
-        surnameView = (EditText) findViewById(R.id.reg_surname);
-        phoneView = (EditText) findViewById(R.id.reg_phone);
-        emailView = (EditText) findViewById(R.id.reg_email);
+        nameView = (EditText) findViewById(R.id.name);
+        lastnameView = (EditText) findViewById(R.id.lastname);
+        surnameView = (EditText) findViewById(R.id.surname);
+        phoneView = (EditText) findViewById(R.id.phone);
+        emailView = (EditText) findViewById(R.id.email);
         passwordView = (EditText) findViewById(R.id.reg_password);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
