@@ -20,18 +20,22 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     private SettingsFragment settingsFragment;
     private WorkflowFragment workflowFragment;
 
-    private DrawerLayout drawer;
+    private DrawerLayout drawerLayout;
+
+    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fm = getFragmentManager();
+
         setContentView(R.layout.activity_workflow);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_workflow);
         setSupportActionBar(toolbar);
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_workflow);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_workflow);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.setDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState();
 
@@ -42,8 +46,7 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
         aboutFragment = new AboutFragment();
         settingsFragment = new SettingsFragment();
         workflowFragment = new WorkflowFragment();
-        getFragmentManager()
-                .beginTransaction()
+        fm.beginTransaction()
                 .add(R.id.container_workflow, workflowFragment)
                 .commit();
     }
@@ -51,7 +54,7 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        FragmentTransaction tx = getFragmentManager().beginTransaction();
+        FragmentTransaction tx = fm.beginTransaction();
         boolean fragmentChanged = false;
         switch (id) {
             case R.id.menu_workflow_about:
@@ -71,21 +74,22 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
             tx.addToBackStack(this.getClass().getSimpleName());
         }
         tx.commit();
-        drawer.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            if (getFragmentManager().getBackStackEntryCount() == 1) {
-                getFragmentManager().popBackStack();
-            } else if (getFragmentManager().getBackStackEntryCount() > 1) {
-                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getFragmentManager()
-                        .beginTransaction()
+            int stackSize = fm.getBackStackEntryCount();
+            if (stackSize == 1) {
+                fm.popBackStack();
+            } else if (stackSize > 1) {
+                //Clear all stack
+                fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fm.beginTransaction()
                         .replace(R.id.container_workflow, workflowFragment)
                         .commit();
             } else {
@@ -96,12 +100,12 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onKeyDown(int keycode, KeyEvent e) {
-        switch(keycode) {
+        switch (keycode) {
             case KeyEvent.KEYCODE_MENU:
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
                 } else {
-                    drawer.openDrawer(GravityCompat.START);
+                    drawerLayout.openDrawer(GravityCompat.START);
                 }
                 return true;
         }
