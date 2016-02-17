@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_workflow_about"
+            android:title="@string/menu_user_about" />
+        <item
+            android:id="@+id/menu_workflow_settings"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/menu_additional_settings" />
+</menu>

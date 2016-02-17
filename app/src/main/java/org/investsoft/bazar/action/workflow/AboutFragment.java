@@ -28,7 +28,7 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
     private EditText phoneView;
     private EditText emailView;
 
-    private GetUserInfoTask userInfoTask = null;
+    private GetUserInfoTask getUserInfoTask = null;
     private UpdateUserInfoTask updateUserInfoTask = null;
 
     @Override
@@ -49,13 +49,13 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
             }
         });
         //Getting userInfo
-        userInfoTask = new GetUserInfoTask(null, this);
-        userInfoTask.execute((Void) null);
+        getUserInfoTask = new GetUserInfoTask(null, this);
+        getUserInfoTask.execute((Void) null);
         return view;
     }
 
     private void attemptUpdate() {
-        if (userInfoTask != null) {
+        if (getUserInfoTask != null) {
             return;
         }
         // Reset errors.
@@ -78,12 +78,12 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
             focusView = nameView;
             cancel = true;
         }
-        if (TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(lastname)) {
             lastnameView.setError(getString(R.string.error_field_required));
             focusView = lastnameView;
             cancel = true;
         }
-        if (TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(phone)) {
             phoneView.setError(getString(R.string.error_field_required));
             focusView = phoneView;
             cancel = true;
@@ -107,7 +107,7 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
             phoneView.setText(result.getUserInfo().getPhone());
             emailView.setText(result.getUserInfo().getEmail());
         }
-        userInfoTask = null;
+        getUserInfoTask = null;
     }
 
     @Override
@@ -128,7 +128,7 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
                             });
             AlertDialog alert = builder.create();
             alert.show();
-            userInfoTask = null;
+            getUserInfoTask = null;
         }
     }
 
