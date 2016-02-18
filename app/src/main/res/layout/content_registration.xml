@@ -19,7 +19,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/lastname"
+            android:id="@+id/reg_lastname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/lastname"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/name"
+            android:id="@+id/reg_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/surname"
+            android:id="@+id/reg_surname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/surname"
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/reg_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
@@ -79,7 +79,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/phone"
+            android:id="@+id/reg_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/phone"

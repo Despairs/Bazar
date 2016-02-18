@@ -39,8 +39,8 @@ public class LoginActivity extends AsyncActivity implements AuthenticationTask.I
         setContentView(R.layout.activity_login);
 
         // Set up the login form.
-        emailView = (EditText) findViewById(R.id.email);
-        passwordView = (EditText) findViewById(R.id.password);
+        emailView = (EditText) findViewById(R.id.login_email);
+        passwordView = (EditText) findViewById(R.id.login_password);
 
         //Trying to get stored data or data from Intent
         Intent i = getIntent();

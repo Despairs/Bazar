@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Name"
-        android:id="@+id/name" />
+        android:id="@+id/reg_name" />
 
     <TextView
         android:layout_width="wrap_content"

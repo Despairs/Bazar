@@ -35,11 +35,11 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about, container, false);
         //Init UI
-        nameView = (EditText) view.findViewById(R.id.name);
-        lastnameView = (EditText) view.findViewById(R.id.lastname);
-        surnameView = (EditText) view.findViewById(R.id.surname);
-        phoneView = (EditText) view.findViewById(R.id.phone);
-        emailView = (EditText) view.findViewById(R.id.email);
+        nameView = (EditText) view.findViewById(R.id.about_name);
+        lastnameView = (EditText) view.findViewById(R.id.about_lastname);
+        surnameView = (EditText) view.findViewById(R.id.about_surname);
+        phoneView = (EditText) view.findViewById(R.id.about_phone);
+        emailView = (EditText) view.findViewById(R.id.about_email);
 
         Button updateInfoButton = (Button) view.findViewById(R.id.do_update_button);
         updateInfoButton.setOnClickListener(new View.OnClickListener() {
