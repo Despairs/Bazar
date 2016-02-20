@@ -16,7 +16,7 @@
 
         <include
             android:id="@+id/_toolbar_workflow"
-            layout="@layout/toolbar_workflow"
+            layout="@layout/activity_workflow_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/toolbar_workflow_header"
+        app:headerLayout="@layout/activity_workflow_toolbar_header"
         app:menu="@menu/menu_workflow" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,11 +1,7 @@
 package org.investsoft.bazar.action.common;
 
-import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v4.app.Fragment;
 
 /**
  * Created by Despairs on 19.01.16.

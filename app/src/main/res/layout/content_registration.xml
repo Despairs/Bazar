@@ -10,6 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/content_registration"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".action.registration.RegistrationActivity"
     tools:showIn="@layout/activity_registration">
@@ -19,7 +20,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/reg_lastname"
+            android:id="@+id/lastname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/lastname"
@@ -34,7 +35,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/reg_name"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
@@ -49,7 +50,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/reg_surname"
+            android:id="@+id/surname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/surname"
@@ -64,7 +65,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/reg_email"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
@@ -79,7 +80,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/reg_phone"
+            android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/phone"
@@ -94,7 +95,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/reg_password"
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"

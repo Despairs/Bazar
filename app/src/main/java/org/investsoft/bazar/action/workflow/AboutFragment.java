@@ -18,15 +18,11 @@ import org.investsoft.bazar.action.common.AsyncResult;
 import org.investsoft.bazar.action.common.GetUserInfoAsyncResult;
 import org.investsoft.bazar.action.common.GetUserInfoTask;
 import org.investsoft.bazar.action.common.UpdateUserInfoTask;
+import org.investsoft.bazar.action.common.UserInfoHolder;
 
 public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGetUserInfoCaller, UpdateUserInfoTask.IUpdateUserInfoCaller {
 
-    // UI references.
-    private EditText nameView;
-    private EditText lastnameView;
-    private EditText surnameView;
-    private EditText phoneView;
-    private EditText emailView;
+    private UserInfoHolder userInfoHolder;
 
     private GetUserInfoTask getUserInfoTask = null;
     private UpdateUserInfoTask updateUserInfoTask = null;
@@ -34,12 +30,8 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_about, container, false);
-        //Init UI
-        nameView = (EditText) view.findViewById(R.id.about_name);
-        lastnameView = (EditText) view.findViewById(R.id.about_lastname);
-        surnameView = (EditText) view.findViewById(R.id.about_surname);
-        phoneView = (EditText) view.findViewById(R.id.about_phone);
-        emailView = (EditText) view.findViewById(R.id.about_email);
+
+        userInfoHolder = new UserInfoHolder(view);
 
         Button updateInfoButton = (Button) view.findViewById(R.id.do_update_button);
         updateInfoButton.setOnClickListener(new View.OnClickListener() {
@@ -59,33 +51,33 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
             return;
         }
         // Reset errors.
-        phoneView.setError(null);
-        nameView.setError(null);
-        lastnameView.setError(null);
+        userInfoHolder.getEmailView().setError(null);
+        userInfoHolder.getNameView().setError(null);
+        userInfoHolder.getLastnameView().setError(null);
 
         // Store values at the time of the registration attempt.
-        String name = nameView.getText().toString();
-        String lastname = lastnameView.getText().toString();
-        String surname = surnameView.getText().toString();
-        String phone = phoneView.getText().toString();
-        String email = emailView.getText().toString();
+        String name = userInfoHolder.getNameView().getText().toString();
+        String lastname = userInfoHolder.getLastnameView().getText().toString();
+        String surname = userInfoHolder.getSurnameView().getText().toString();
+        String phone = userInfoHolder.getPhoneView().getText().toString();
+        String email = userInfoHolder.getEmailView().getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         if (TextUtils.isEmpty(name)) {
-            nameView.setError(getString(R.string.error_field_required));
-            focusView = nameView;
+            userInfoHolder.getNameView().setError(getString(R.string.error_field_required));
+            focusView = userInfoHolder.getNameView();
             cancel = true;
         }
         if (TextUtils.isEmpty(lastname)) {
-            lastnameView.setError(getString(R.string.error_field_required));
-            focusView = lastnameView;
+            userInfoHolder.getLastnameView().setError(getString(R.string.error_field_required));
+            focusView = userInfoHolder.getLastnameView();
             cancel = true;
         }
         if (TextUtils.isEmpty(phone)) {
-            phoneView.setError(getString(R.string.error_field_required));
-            focusView = phoneView;
+            userInfoHolder.getPhoneView().setError(getString(R.string.error_field_required));
+            focusView =  userInfoHolder.getPhoneView();
             cancel = true;
         }
         if (cancel) {
@@ -101,11 +93,11 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
     @Override
     public void processGetUserInfoResult(GetUserInfoAsyncResult result) {
         if (result.isSuccess()) {
-            nameView.setText(result.getUserInfo().getName());
-            lastnameView.setText(result.getUserInfo().getLastname());
-            surnameView.setText(result.getUserInfo().getSurname());
-            phoneView.setText(result.getUserInfo().getPhone());
-            emailView.setText(result.getUserInfo().getEmail());
+            userInfoHolder.getNameView().setText(result.getUserInfo().getName());
+            userInfoHolder.getLastnameView().setText(result.getUserInfo().getLastname());
+            userInfoHolder.getSurnameView().setText(result.getUserInfo().getSurname());
+            userInfoHolder.getPhoneView().setText(result.getUserInfo().getPhone());
+            userInfoHolder.getEmailView().setText(result.getUserInfo().getEmail());
         }
         getUserInfoTask = null;
     }

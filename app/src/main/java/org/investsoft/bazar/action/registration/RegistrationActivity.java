@@ -9,11 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import org.investsoft.bazar.R;
 import org.investsoft.bazar.action.common.AsyncActivity;
 import org.investsoft.bazar.action.common.AsyncResult;
+import org.investsoft.bazar.action.common.UserInfoHolder;
 import org.investsoft.bazar.action.login.LoginActivity;
 
 public class RegistrationActivity extends AsyncActivity implements RegistrationTask.IRegCaller {
@@ -23,26 +23,13 @@ public class RegistrationActivity extends AsyncActivity implements RegistrationT
      */
     private RegistrationTask regTask = null;
 
-    // UI references.
-    private EditText nameView;
-    private EditText lastnameView;
-    private EditText surnameView;
-    private EditText phoneView;
-    private EditText emailView;
-    private EditText passwordView;
+    private UserInfoHolder userInfoHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-
-        // Set up the login form.
-        nameView = (EditText) findViewById(R.id.reg_name);
-        lastnameView = (EditText) findViewById(R.id.reg_lastname);
-        surnameView = (EditText) findViewById(R.id.reg_surname);
-        phoneView = (EditText) findViewById(R.id.reg_phone);
-        emailView = (EditText) findViewById(R.id.reg_email);
-        passwordView = (EditText) findViewById(R.id.reg_password);
+        userInfoHolder = new UserInfoHolder(findViewById(R.id.content_registration));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,34 +54,34 @@ public class RegistrationActivity extends AsyncActivity implements RegistrationT
             return;
         }
         // Reset errors.
-        emailView.setError(null);
-        passwordView.setError(null);
+        userInfoHolder.getEmailView().setError(null);
+        userInfoHolder.getPasswordView().setError(null);
 
         // Store values at the time of the registration attempt.
-        String name = nameView.getText().toString();
-        String lastname = lastnameView.getText().toString();
-        String surname = surnameView.getText().toString();
-        String phone = phoneView.getText().toString();
-        String email = emailView.getText().toString();
-        String password = passwordView.getText().toString();
+        String name = userInfoHolder.getNameView().getText().toString();
+        String lastname = userInfoHolder.getLastnameView().getText().toString();
+        String surname = userInfoHolder.getSurnameView().getText().toString();
+        String phone = userInfoHolder.getPhoneView().getText().toString();
+        String email = userInfoHolder.getEmailView().getText().toString();
+        String password = userInfoHolder.getPasswordView().getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
         if (TextUtils.isEmpty(password)) {
-            passwordView.setError(getString(R.string.error_field_required));
-            focusView = passwordView;
+            userInfoHolder.getPasswordView().setError(getString(R.string.error_field_required));
+            focusView = userInfoHolder.getPasswordView();
             cancel = true;
         }
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            emailView.setError(getString(R.string.error_field_required));
-            focusView = emailView;
+            userInfoHolder.getEmailView().setError(getString(R.string.error_field_required));
+            focusView = userInfoHolder.getEmailView();
             cancel = true;
         } else if (!email.contains("@")) {
-            emailView.setError(getString(R.string.error_invalid_email));
-            focusView = emailView;
+            userInfoHolder.getEmailView().setError(getString(R.string.error_invalid_email));
+            focusView = userInfoHolder.getEmailView();
             cancel = true;
         }
         if (cancel) {
@@ -112,7 +99,7 @@ public class RegistrationActivity extends AsyncActivity implements RegistrationT
         showProgress(false);
         if (result.isSuccess()) {
             Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-            i.putExtra("email", emailView.getText().toString());
+            i.putExtra("email", userInfoHolder.getEmailView().getText().toString());
             startActivity(i);
             finish();
         } else {
