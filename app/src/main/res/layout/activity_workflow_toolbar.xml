@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            android:paddingTop="@dimen/status_bar_height"
+            app:theme="@style/AppTheme.AppBarOverlay" />
 
     </android.support.design.widget.AppBarLayout>
 

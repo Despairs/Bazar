@@ -40,6 +40,7 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_workflow);
+        drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 
             @Override
@@ -73,23 +74,17 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         FragmentTransaction tx = fm.beginTransaction();
-        boolean fragmentChanged = false;
         switch (id) {
             case R.id.menu_workflow_about:
                 if (!aboutFragment.isVisible()) {
                     tx.replace(R.id.container_workflow, aboutFragment);
-                    fragmentChanged = true;
                 }
                 break;
             case R.id.menu_workflow_settings:
                 if (!settingsFragment.isVisible()) {
                     tx.replace(R.id.container_workflow, settingsFragment);
-                    fragmentChanged = true;
                 }
                 break;
-        }
-        if (fragmentChanged) {
-            tx.addToBackStack(this.getClass().getSimpleName());
         }
         tx.commit();
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -102,10 +97,7 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             int stackSize = fm.getBackStackEntryCount();
-            if (stackSize == 1) {
-                fm.popBackStack();
-            } else if (stackSize > 1) {
-                //Clear all stack
+            if (stackSize >= 1) {
                 fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 fm.beginTransaction()
                         .replace(R.id.container_workflow, workflowFragment)

@@ -8,10 +8,11 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
+    <!--android:fitsSystemWindows="true"-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <include
@@ -33,6 +34,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/activity_workflow_toolbar_header"
+        android:paddingTop="@dimen/status_bar_height"
         app:menu="@menu/menu_workflow" />
 
 </android.support.v4.widget.DrawerLayout>
