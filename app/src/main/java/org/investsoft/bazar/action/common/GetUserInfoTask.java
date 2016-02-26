@@ -10,6 +10,7 @@ import org.investsoft.bazar.api.model.base.User;
 import org.investsoft.bazar.api.model.get.GetUserInfoRequest;
 import org.investsoft.bazar.api.model.get.GetUserInfoResponse;
 import org.investsoft.bazar.utils.JsonHelper;
+import org.investsoft.bazar.utils.UserConfig;
 
 /**
  * Created by Despairs on 12.01.16.
@@ -17,11 +18,6 @@ import org.investsoft.bazar.utils.JsonHelper;
 public class GetUserInfoTask extends AsyncTask<Void, Void, GetUserInfoAsyncResult> {
 
     private final String userId;
-
-    private final String cfg;
-    private final String sessionIdKey;
-    private final String userInfoKey;
-    private final String sessionId;
 
     public interface IGetUserInfoCaller extends IActivityContext {
         public void processGetUserInfoResult(GetUserInfoAsyncResult result);
@@ -32,12 +28,6 @@ public class GetUserInfoTask extends AsyncTask<Void, Void, GetUserInfoAsyncResul
     public GetUserInfoTask(String userId, IGetUserInfoCaller caller) {
         this.userId = userId;
         this.caller = caller;
-        //Init config
-        this.cfg = caller.getContext().getString(R.string.config);
-        this.sessionIdKey = this.caller.getContext().getString(R.string.sessionId);
-        this.userInfoKey = this.caller.getContext().getString(R.string.userInfo);
-        //Restore sessionId
-        this.sessionId = this.caller.getContext().getSharedPreferences(cfg, Context.MODE_PRIVATE).getString(sessionIdKey, null);
     }
 
     @Override
@@ -47,8 +37,8 @@ public class GetUserInfoTask extends AsyncTask<Void, Void, GetUserInfoAsyncResul
             ApiClient api = null;
             try {
                 api = new ApiClient(caller.getContext());
-                if (sessionId != null) {
-                    GetUserInfoRequest req = new GetUserInfoRequest(sessionId, userId);
+                if (UserConfig.sessionId != null) {
+                    GetUserInfoRequest req = new GetUserInfoRequest(UserConfig.sessionId , userId);
                     GetUserInfoResponse resp = api.getUserInfo(req);
                     if (resp.getCode() != 0) {
                         throw new ApiException(resp.getMessage(), resp.getCode());
@@ -64,9 +54,8 @@ public class GetUserInfoTask extends AsyncTask<Void, Void, GetUserInfoAsyncResul
                 result.setMessage(e.getMessage());
             }
         } else {
-            String userInfoJson = this.caller.getContext().getSharedPreferences(cfg, Context.MODE_PRIVATE).getString(userInfoKey, null);
-            if (userInfoJson != null) {
-                result.setUserInfo(JsonHelper.parseJson(userInfoJson, User.class));
+            if (UserConfig.user != null) {
+                result.setUserInfo(UserConfig.user);
                 result.setSuccess(Boolean.TRUE);
             } else {
                 result.setMessage(caller.getContext().getString(R.string.error_invalid_user_info));

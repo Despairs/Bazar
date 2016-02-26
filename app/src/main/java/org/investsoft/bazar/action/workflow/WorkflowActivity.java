@@ -2,6 +2,7 @@ package org.investsoft.bazar.action.workflow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -18,6 +19,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import org.investsoft.bazar.R;
+import org.investsoft.bazar.action.login.LoginActivity;
+import org.investsoft.bazar.action.registration.RegistrationActivity;
+import org.investsoft.bazar.utils.ApplicationLoader;
+import org.investsoft.bazar.utils.UserConfig;
 
 public class WorkflowActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,6 +38,11 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ApplicationLoader.postInitApplication();
+        if (UserConfig.sessionId == null) {
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+        }
         fm = getSupportFragmentManager();
 
         setContentView(R.layout.activity_workflow);

@@ -26,5 +26,6 @@ public class ApplicationLoader extends Application {
             return;
         }
         applicationInited = true;
+        UserConfig.load();
     }
 }

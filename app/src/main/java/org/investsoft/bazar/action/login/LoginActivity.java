@@ -113,8 +113,8 @@ public class LoginActivity extends AsyncActivity implements AuthenticationTask.I
     public void processAuthResult(AsyncResult result) {
         showProgress(false);
         if (result.isSuccess()) {
-            Intent i = new Intent(getApplicationContext(), WorkflowActivity.class);
-            startActivity(i);
+//            Intent i = new Intent(getApplicationContext(), WorkflowActivity.class);
+//            startActivity(i);
             finish();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

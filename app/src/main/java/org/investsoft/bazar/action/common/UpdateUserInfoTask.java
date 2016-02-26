@@ -12,6 +12,7 @@ import org.investsoft.bazar.api.model.post.RegistrationResponse;
 import org.investsoft.bazar.api.model.put.UpdateUserInfoRequest;
 import org.investsoft.bazar.api.model.put.UpdateUserInfoResponse;
 import org.investsoft.bazar.utils.JsonHelper;
+import org.investsoft.bazar.utils.UserConfig;
 
 /**
  * Created by Despairs on 12.01.16.
@@ -28,10 +29,6 @@ public class UpdateUserInfoTask extends AsyncTask<Void, Void, AsyncResult> {
     private final String phone;
     private final String email;
 
-    private final String cfg;
-    private final String userInfoKey;
-    private final String sessionIdKey;
-
     private final IUpdateUserInfoCaller caller;
 
     public UpdateUserInfoTask(String lastname, String name, String surname, String phone, String email, IUpdateUserInfoCaller caller) {
@@ -42,10 +39,6 @@ public class UpdateUserInfoTask extends AsyncTask<Void, Void, AsyncResult> {
         this.phone = phone;
         this.email = email;
 
-        //Init config
-        this.cfg = caller.getContext().getString(R.string.config);
-        this.sessionIdKey = this.caller.getContext().getString(R.string.sessionId);
-        this.userInfoKey = this.caller.getContext().getString(R.string.userInfo);
     }
 
     @Override
@@ -55,19 +48,15 @@ public class UpdateUserInfoTask extends AsyncTask<Void, Void, AsyncResult> {
         try {
             api = new ApiClient(caller.getContext());
             User user = new User(lastname, name, surname, email, phone);
-            //Restore sessionId
-            String sessionId = this.caller.getContext().getSharedPreferences(cfg, Context.MODE_PRIVATE).getString(sessionIdKey, null);
-            UpdateUserInfoRequest req = new UpdateUserInfoRequest(user, sessionId);
+
+            UpdateUserInfoRequest req = new UpdateUserInfoRequest(user, UserConfig.sessionId);
             UpdateUserInfoResponse resp = api.updateUserInfo(req);
             if (resp.getCode() != 0) {
                 throw new ApiException(resp.getMessage(), resp.getCode());
             }
             result.setSuccess(Boolean.TRUE);
-            //Updating userInfo
-            caller.getContext().getSharedPreferences(cfg, Context.MODE_PRIVATE)
-                    .edit()
-                    .putString(userInfoKey, JsonHelper.toJson(user))
-                    .commit();
+            UserConfig.user = user;
+            UserConfig.save();    
         } catch (ApiException e) {
             result.setSuccess(Boolean.FALSE);
             result.setMessage(e.getMessage());

@@ -1,5 +1,7 @@
 package org.investsoft.bazar.api.model.base;
 
+import org.investsoft.bazar.utils.JsonHelper;
+
 /**
  * Created by Despairs on 21.01.16.
  */
@@ -74,11 +76,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "UserInfo: Lastname: " + lastname
-                + "; Name: " + name
-                + "; Surname: " + surname
-                + "; Email: " + email
-                + "; Phone: " + phone
-                + "; Password: " + password;
+        return JsonHelper.toJson(this);
     }
 }
