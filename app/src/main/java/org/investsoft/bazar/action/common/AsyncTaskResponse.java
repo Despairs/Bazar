@@ -3,7 +3,7 @@ package org.investsoft.bazar.action.common;
 /**
  * Created by Despairs on 21.01.16.
  */
-public class AsyncResult {
+public class AsyncTaskResponse {
 
     private boolean success;
     private String message;

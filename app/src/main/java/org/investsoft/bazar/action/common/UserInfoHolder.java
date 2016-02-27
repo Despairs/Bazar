@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import org.investsoft.bazar.R;
+import org.investsoft.bazar.api.model.base.User;
 
 /**
  * Created by Despairs on 20.02.16.

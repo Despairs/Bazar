@@ -6,8 +6,6 @@
     <string name="api_user_action">auth/user</string>
     <!-- Strings related to config-->
     <string name="config">org.investsoft.bazar.cfg</string>
-    <string name="sessionId">SESSION_ID</string>
-    <string name="userInfo">USER_INFO</string>
     <!-- Common strings -->
     <string name="email">Email</string>
     <string name="password">Пароль</string>
@@ -43,5 +41,9 @@
     <string name="menu_additional_settings">Настройки</string>
     <string name="menu_user">Пользователь</string>
     <string name="menu_user_about">Обо мне</string>
+    <string name="menu_user_logout">Выйти</string>
+
+    <!-- Strings related to BROADCASTS -->
+    <string name="broadcast_logout">org.investsoft.bazar.action.ACTION_LOGOUT</string>
 
 </resources>

@@ -1,13 +1,15 @@
 package org.investsoft.bazar.action.workflow;
 
-import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,11 +18,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import org.investsoft.bazar.R;
 import org.investsoft.bazar.action.login.LoginActivity;
-import org.investsoft.bazar.action.registration.RegistrationActivity;
+import org.investsoft.bazar.utils.AndroidUtils;
 import org.investsoft.bazar.utils.ApplicationLoader;
 import org.investsoft.bazar.utils.UserConfig;
 
@@ -35,14 +37,33 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
 
     private FragmentManager fm;
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            UserConfig.sessionId = null;
+            UserConfig.user = null;
+            UserConfig.save();
+            Intent i = new Intent(ApplicationLoader.applicationContext, LoginActivity.class);
+            i.putExtra("loggedOut", true);
+            startActivity(i);
+            finish();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ApplicationLoader.postInitApplication();
+        ApplicationLoader.initApplication();
         if (UserConfig.sessionId == null) {
             Intent i = new Intent(this, LoginActivity.class);
+            i.putExtra("loggedOut", false);
             startActivity(i);
         }
+        //Detecting logout
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(getString(R.string.broadcast_logout));
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, intentFilter);
+
         fm = getSupportFragmentManager();
 
         setContentView(R.layout.activity_workflow);
@@ -50,17 +71,11 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_workflow);
-        drawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 
             @Override
-            public void onDrawerSlide(View drawerView, float slideOffset){
-                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                // check if no view has focus:
-                View v = getCurrentFocus();
-                if (v == null)
-                    return;
-                inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            public void onDrawerSlide(View view, float slideOffset) {
+                AndroidUtils.hideKeyboard(view);
             }
         };
 
@@ -80,6 +95,13 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
                 .commit();
     }
 
+
+    @Override
+    public void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        super.onDestroy();
+    }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -94,6 +116,12 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
                 if (!settingsFragment.isVisible()) {
                     tx.replace(R.id.container_workflow, settingsFragment);
                 }
+                break;
+            case R.id.menu_workflow_logout:
+                Toast.makeText(this, "Logout", Toast.LENGTH_LONG).show();
+                Intent bc = new Intent();
+                bc.setAction(getString(R.string.broadcast_logout));
+                LocalBroadcastManager.getInstance(this).sendBroadcast(bc);
                 break;
         }
         tx.commit();

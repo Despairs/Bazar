@@ -12,11 +12,11 @@ import android.widget.Button;
 
 import org.investsoft.bazar.R;
 import org.investsoft.bazar.action.common.AsyncActivity;
-import org.investsoft.bazar.action.common.AsyncResult;
+import org.investsoft.bazar.action.common.AsyncTaskResponse;
 import org.investsoft.bazar.action.common.UserInfoHolder;
 import org.investsoft.bazar.action.login.LoginActivity;
 
-public class RegistrationActivity extends AsyncActivity implements RegistrationTask.IRegCaller {
+public class RegistrationActivity extends AsyncActivity implements RegistrationTask.IRegistrationTaskCallback {
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -95,7 +95,7 @@ public class RegistrationActivity extends AsyncActivity implements RegistrationT
     }
 
     @Override
-    public void processRegistrationResult(AsyncResult result) {
+    public void getRegistartionTaskCallback(AsyncTaskResponse result) {
         showProgress(false);
         if (result.isSuccess()) {
             Intent i = new Intent(getApplicationContext(), LoginActivity.class);
@@ -119,8 +119,4 @@ public class RegistrationActivity extends AsyncActivity implements RegistrationT
         }
     }
 
-    @Override
-    public Context getContext() {
-        return getApplicationContext();
-    }
 }

@@ -2,8 +2,7 @@ package org.investsoft.bazar.action.registration;
 
 import android.os.AsyncTask;
 
-import org.investsoft.bazar.action.common.AsyncResult;
-import org.investsoft.bazar.action.common.IActivityContext;
+import org.investsoft.bazar.action.common.AsyncTaskResponse;
 import org.investsoft.bazar.api.ApiClient;
 import org.investsoft.bazar.api.model.ApiException;
 import org.investsoft.bazar.api.model.post.RegistrationRequest;
@@ -12,10 +11,10 @@ import org.investsoft.bazar.api.model.post.RegistrationResponse;
 /**
  * Created by Despairs on 12.01.16.
  */
-public class RegistrationTask extends AsyncTask<Void, Void, AsyncResult> {
+public class RegistrationTask extends AsyncTask<Void, Void, AsyncTaskResponse> {
 
-    public interface IRegCaller extends IActivityContext {
-        public void processRegistrationResult(AsyncResult result);
+    public interface IRegistrationTaskCallback {
+        public void getRegistartionTaskCallback(AsyncTaskResponse result);
     }
 
     private final String name;
@@ -24,9 +23,9 @@ public class RegistrationTask extends AsyncTask<Void, Void, AsyncResult> {
     private final String phone;
     private final String email;
     private final String password;
-    private final IRegCaller caller;
+    private final IRegistrationTaskCallback caller;
 
-    public RegistrationTask(String lastname, String name, String surname, String phone, String email, String password, IRegCaller caller) {
+    public RegistrationTask(String lastname, String name, String surname, String phone, String email, String password, IRegistrationTaskCallback caller) {
         this.caller = caller;
         this.name = name;
         this.lastname = lastname;
@@ -37,13 +36,11 @@ public class RegistrationTask extends AsyncTask<Void, Void, AsyncResult> {
     }
 
     @Override
-    protected AsyncResult doInBackground(Void... params) {
-        AsyncResult result = new AsyncResult();
-        ApiClient api = null;
+    protected AsyncTaskResponse doInBackground(Void... params) {
+        AsyncTaskResponse result = new AsyncTaskResponse();
         try {
-            api = new ApiClient(caller.getContext());
             RegistrationRequest req = new RegistrationRequest(lastname, name, surname, phone, email, password);
-            RegistrationResponse resp = api.registration(req);
+            RegistrationResponse resp = ApiClient.getInstance().registration(req);
             if (resp.getCode() != 0) {
                 throw new ApiException(resp.getMessage(), resp.getCode());
             }
@@ -56,7 +53,7 @@ public class RegistrationTask extends AsyncTask<Void, Void, AsyncResult> {
     }
 
     @Override
-    protected void onPostExecute(AsyncResult result) {
-        caller.processRegistrationResult(result);
+    protected void onPostExecute(AsyncTaskResponse result) {
+        caller.getRegistartionTaskCallback(result);
     }
 }

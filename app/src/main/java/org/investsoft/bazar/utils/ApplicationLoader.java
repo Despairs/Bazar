@@ -11,17 +11,15 @@ import android.os.Handler;
 public class ApplicationLoader extends Application {
 
     public static volatile Context applicationContext;
-    public static volatile Handler applicationHandler;
     private static volatile boolean applicationInited = false;
 
     @Override
     public void onCreate() {
         super.onCreate();
         applicationContext = getApplicationContext();
-        applicationHandler = new Handler(applicationContext.getMainLooper());
     }
 
-    public static void postInitApplication() {
+    public static void initApplication() {
         if (applicationInited) {
             return;
         }

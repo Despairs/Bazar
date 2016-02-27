@@ -13,8 +13,8 @@ public class UserConfig {
 
     private static final String cfg = "org.investsoft.bazar.cfg";
 
-    public static String sessionId;
-    public static User user;
+    public static String sessionId = null;
+    public static User user = null;
 
     public static void save() {
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences(cfg, Context.MODE_PRIVATE);
@@ -25,11 +25,8 @@ public class UserConfig {
     }
 
     public static void load() {
-        Log.d("BAZAR", "Init config");
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences(cfg, Context.MODE_PRIVATE);
         sessionId = preferences.getString("sessionId", null);
         user = JsonHelper.parseJson(preferences.getString("user", null), User.class);
-        Log.d("BAZAR", "sessionId = " + sessionId);
-//        Log.d("BAZAR", "user = " + user != null ? user.toString() : null);
     }
 }

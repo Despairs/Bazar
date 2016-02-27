@@ -1,7 +1,6 @@
 package org.investsoft.bazar.action.workflow;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,22 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import org.investsoft.bazar.R;
 import org.investsoft.bazar.action.common.AsyncFragment;
-import org.investsoft.bazar.action.common.AsyncResult;
-import org.investsoft.bazar.action.common.GetUserInfoAsyncResult;
-import org.investsoft.bazar.action.common.GetUserInfoTask;
+import org.investsoft.bazar.action.common.AsyncTaskResponse;
 import org.investsoft.bazar.action.common.UpdateUserInfoTask;
 import org.investsoft.bazar.action.common.UserInfoHolder;
+import org.investsoft.bazar.api.model.base.User;
+import org.investsoft.bazar.utils.UserConfig;
 
-public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGetUserInfoCaller, UpdateUserInfoTask.IUpdateUserInfoCaller {
+public class AboutFragment extends AsyncFragment implements UpdateUserInfoTask.IUpdateUserInfoTaskCallback {
 
     private UserInfoHolder userInfoHolder;
-
-    private GetUserInfoTask getUserInfoTask = null;
+    private User updatedUserInfo = null;
     private UpdateUserInfoTask updateUserInfoTask = null;
 
     @Override
@@ -33,6 +30,8 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
 
         userInfoHolder = new UserInfoHolder(view);
 
+        fillUserInfoFields(UserConfig.user);
+
         Button updateInfoButton = (Button) view.findViewById(R.id.do_update_button);
         updateInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,16 +39,11 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
                 attemptUpdate();
             }
         });
-        //Getting userInfo
-        getUserInfoTask = new GetUserInfoTask(null, this);
-        getUserInfoTask.execute((Void) null);
+
         return view;
     }
 
     private void attemptUpdate() {
-        if (getUserInfoTask != null) {
-            return;
-        }
         // Reset errors.
         userInfoHolder.getEmailView().setError(null);
         userInfoHolder.getNameView().setError(null);
@@ -84,28 +78,19 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
             focusView.requestFocus();
         } else {
             showProgress(true);
-            updateUserInfoTask = new UpdateUserInfoTask(lastname, name, surname, phone, email, this);
+            updatedUserInfo = new User(lastname, name, surname, email, phone);
+            updateUserInfoTask = new UpdateUserInfoTask(updatedUserInfo, this);
             updateUserInfoTask.execute((Void) null);
 
         }
     }
 
     @Override
-    public void processGetUserInfoResult(GetUserInfoAsyncResult result) {
-        if (result.isSuccess()) {
-            userInfoHolder.getNameView().setText(result.getUserInfo().getName());
-            userInfoHolder.getLastnameView().setText(result.getUserInfo().getLastname());
-            userInfoHolder.getSurnameView().setText(result.getUserInfo().getSurname());
-            userInfoHolder.getPhoneView().setText(result.getUserInfo().getPhone());
-            userInfoHolder.getEmailView().setText(result.getUserInfo().getEmail());
-        }
-        getUserInfoTask = null;
-    }
-
-    @Override
-    public void processUpdateUserInfoResult(AsyncResult result) {
+    public void getUpdateUserInfoTaskCallback(AsyncTaskResponse result) {
         showProgress(false);
         if (result.isSuccess()) {
+            UserConfig.user = updatedUserInfo;
+            UserConfig.save();
             Toast.makeText(getActivity(), getString(R.string.toast_update_user_info), Toast.LENGTH_LONG).show();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -120,18 +105,21 @@ public class AboutFragment extends AsyncFragment implements GetUserInfoTask.IGet
                             });
             AlertDialog alert = builder.create();
             alert.show();
-            getUserInfoTask = null;
         }
-    }
-
-    @Override
-    public Context getContext() {
-        return getActivity().getApplicationContext();
     }
 
     @Override
     protected String getProgressDialogMessage() {
         return getString(R.string.async_common);
+    }
+
+    public void fillUserInfoFields(User user) {
+        userInfoHolder.getNameView().setText(user.getName());
+        userInfoHolder.getLastnameView().setText(user.getLastname());
+        userInfoHolder.getSurnameView().setText(user.getSurname());
+        userInfoHolder.getPhoneView().setText(user.getPhone());
+        userInfoHolder.getEmailView().setText(user.getEmail());
+
     }
 
 }

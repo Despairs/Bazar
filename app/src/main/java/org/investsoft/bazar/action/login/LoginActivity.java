@@ -1,7 +1,6 @@
 package org.investsoft.bazar.action.login;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,22 +11,23 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.investsoft.bazar.R;
-import org.investsoft.bazar.action.workflow.WorkflowActivity;
 import org.investsoft.bazar.action.common.AsyncActivity;
-import org.investsoft.bazar.action.common.AsyncResult;
 import org.investsoft.bazar.action.registration.RegistrationActivity;
+import org.investsoft.bazar.action.workflow.WorkflowActivity;
+import org.investsoft.bazar.utils.ApplicationLoader;
+import org.investsoft.bazar.utils.UserConfig;
 
 
 /**
  * A login screen that offers login via login/password.
  */
 
-public class LoginActivity extends AsyncActivity implements AuthenticationTask.IAuthCaller {
+public class LoginActivity extends AsyncActivity implements LoginTask.ILoginTaskCallback {
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private AuthenticationTask authTask = null;
+    private LoginTask authTask = null;
 
     // UI references.
     private EditText emailView;
@@ -50,19 +50,19 @@ public class LoginActivity extends AsyncActivity implements AuthenticationTask.I
             emailView.setText(email);
         }
 
-        Button signInButton = (Button) findViewById(R.id.sign_in_button);
-        signInButton.setOnClickListener(new OnClickListener() {
+        Button loginButton = (Button) findViewById(R.id.login_button);
+        loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
             }
         });
 
-        Button registrationButton = (Button) findViewById(R.id.login_reg_button);
+        Button registrationButton = (Button) findViewById(R.id.registration_button);
         registrationButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), RegistrationActivity.class);
+                Intent i = new Intent(ApplicationLoader.applicationContext, RegistrationActivity.class);
                 startActivity(i);
             }
         });
@@ -103,23 +103,30 @@ public class LoginActivity extends AsyncActivity implements AuthenticationTask.I
             focusView.requestFocus();
         } else {
             showProgress(true);
-            authTask = new AuthenticationTask(email, password, this);
+            authTask = new LoginTask(email, password, this);
             authTask.execute((Void) null);
 
         }
     }
 
     @Override
-    public void processAuthResult(AsyncResult result) {
+    public void getLoginTaskCallback(LoginTaskResponse response) {
         showProgress(false);
-        if (result.isSuccess()) {
-//            Intent i = new Intent(getApplicationContext(), WorkflowActivity.class);
-//            startActivity(i);
+        if (response.isSuccess()) {
+            //Saving sessionId and userInfo
+            UserConfig.sessionId = response.getSession().getSessionId();
+            UserConfig.user = response.getSession().getUser();
+            UserConfig.save();
+            boolean loggedOut = getIntent().getBooleanExtra("loggedOut", true);
+            if (loggedOut) {
+                Intent i = new Intent(this, WorkflowActivity.class);
+                startActivity(i);
+            }
             finish();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Ошибка!")
-                    .setMessage(result.getMessage())
+                    .setMessage(response.getMessage())
                     .setCancelable(false)
                     .setPositiveButton("Окей",
                             new DialogInterface.OnClickListener() {
@@ -129,18 +136,13 @@ public class LoginActivity extends AsyncActivity implements AuthenticationTask.I
                             });
             AlertDialog alert = builder.create();
             alert.show();
-            authTask = null;
         }
+        authTask = null;
     }
 
     @Override
     protected String getProgressDialogMessage() {
         return getString(R.string.async_auth);
-    }
-
-    @Override
-    public Context getContext() {
-        return getApplicationContext();
     }
 
 }
