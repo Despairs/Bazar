@@ -24,7 +24,7 @@
     <!-- Strings related to async tasks -->
     <string name="async_common">Пожалуйста, подождите</string>
     <string name="async_reg">Создание пользователя</string>
-    <string name="async_auth">Проверка учетных данных</string>
+    <string name="async_login">Проверка учетных данных</string>
     <!-- Strings related to fast popup messages -->
     <string name="toast_update_user_info">Пользовательские данные обновлены</string>
     <!-- Strings related to errors -->
@@ -38,12 +38,29 @@
 
     <!-- Strings related to menus -->
     <string name="menu_additional">Дополнительно</string>
-    <string name="menu_additional_settings">Настройки</string>
+    <string name="preferences">Настройки</string>
     <string name="menu_user">Пользователь</string>
-    <string name="menu_user_about">Обо мне</string>
+    <string name="about">Обо мне</string>
+    <string name="main">Главная</string>
     <string name="menu_user_logout">Выйти</string>
 
     <!-- Strings related to BROADCASTS -->
     <string name="broadcast_logout">org.investsoft.bazar.action.ACTION_LOGOUT</string>
 
+    <!-- Strings related to preferences -->
+    <string name="preferences_title_rememberMe">Запомнить профиль</string>
+    <!--<string name="preferences_title_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
+    <!--<string name="preferences_title_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
+    <!--<string name="preferences_title_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
+    <!--<string name="preferences_title_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
+
+    <string name="preferences_summary_rememberMe">Выполнять вход в приложение, используя последние учетные данные</string>
+    <!--<string name="preferences_summary_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
+    <!--<string name="preferences_summary_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
+    <!--<string name="preferences_summary_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
+    <!--<string name="preferences_summary_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
+    <!--<string name="preferences_summary_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
+    <!--<string name="preferences_summary_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
+    <!--<string name="preferences_summary_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
+    <!--<string name="preferences_summary_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
 </resources>

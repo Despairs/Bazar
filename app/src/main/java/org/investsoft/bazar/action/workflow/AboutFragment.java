@@ -1,5 +1,6 @@
 package org.investsoft.bazar.action.workflow;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -29,7 +30,6 @@ public class AboutFragment extends AsyncFragment implements UpdateUserInfoTask.I
         View view = inflater.inflate(R.layout.fragment_about, container, false);
 
         userInfoHolder = new UserInfoHolder(view);
-
         fillUserInfoFields(UserConfig.user);
 
         Button updateInfoButton = (Button) view.findViewById(R.id.do_update_button);

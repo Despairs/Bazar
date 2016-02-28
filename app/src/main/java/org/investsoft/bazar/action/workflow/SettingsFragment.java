@@ -1,25 +1,40 @@
 package org.investsoft.bazar.action.workflow;
 
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import org.investsoft.bazar.R;
+import org.investsoft.bazar.utils.UserConfig;
 
-public class SettingsFragment extends Fragment {
-
-    private TextView text;
+public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        text = (TextView) view.findViewById(R.id.txt);
-        text.setText("settings");
-        return view;
+    public void onCreatePreferences(Bundle bundle, String s) {
+        getPreferenceManager().setSharedPreferencesName(UserConfig.cfgName);
+        getPreferenceManager().setSharedPreferencesMode(UserConfig.cfgMode);
+        addPreferencesFromResource(R.xml.preferences);
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        UserConfig.load();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    }
 }

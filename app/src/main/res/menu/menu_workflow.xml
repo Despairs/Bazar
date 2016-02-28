@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single"
+        android:id="@+id/menu_workflow_group_common">
+        <item
+            android:id="@+id/menu_workflow_main"
+            android:title="@string/main" />
+    </group>
+    <group android:checkableBehavior="single"
         android:id="@+id/menu_workflow_group_user">
         <item
             android:id="@+id/menu_workflow_about"
-            android:title="@string/menu_user_about" />
+            android:title="@string/about" />
     </group>
     <group android:checkableBehavior="single"
         android:id="@+id/menu_workflow_group_additional">
         <item
-            android:id="@+id/menu_workflow_settings"
+            android:id="@+id/menu_workflow_preferences"
             android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_additional_settings" />
+            android:title="@string/preferences" />
         <item
             android:id="@+id/menu_workflow_logout"
             android:icon="@drawable/ic_menu_send"

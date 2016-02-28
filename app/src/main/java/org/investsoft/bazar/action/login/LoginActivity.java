@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import org.investsoft.bazar.R;
@@ -32,6 +33,7 @@ public class LoginActivity extends AsyncActivity implements LoginTask.ILoginTask
     // UI references.
     private EditText emailView;
     private EditText passwordView;
+    private CheckBox rememberCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class LoginActivity extends AsyncActivity implements LoginTask.ILoginTask
         // Set up the login form.
         emailView = (EditText) findViewById(R.id.login_email);
         passwordView = (EditText) findViewById(R.id.login_password);
+        rememberCheckBox = (CheckBox) findViewById(R.id.login_chkbx_rememberMe);
 
         //Trying to get stored data or data from Intent
         Intent i = getIntent();
@@ -116,12 +119,10 @@ public class LoginActivity extends AsyncActivity implements LoginTask.ILoginTask
             //Saving sessionId and userInfo
             UserConfig.sessionId = response.getSession().getSessionId();
             UserConfig.user = response.getSession().getUser();
+            UserConfig.rememberMe = rememberCheckBox.isChecked();
             UserConfig.save();
-            boolean loggedOut = getIntent().getBooleanExtra("loggedOut", true);
-            if (loggedOut) {
-                Intent i = new Intent(this, WorkflowActivity.class);
-                startActivity(i);
-            }
+            Intent i = new Intent(this, WorkflowActivity.class);
+            startActivity(i);
             finish();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -142,8 +143,12 @@ public class LoginActivity extends AsyncActivity implements LoginTask.ILoginTask
 
     @Override
     protected String getProgressDialogMessage() {
-        return getString(R.string.async_auth);
+        return getString(R.string.async_login);
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }
 

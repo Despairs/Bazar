@@ -1,5 +1,6 @@
 package org.investsoft.bazar.action.workflow;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,7 +33,6 @@ public class WorkflowFragment extends Fragment {
         l.add("7");
         adapter = new WorkflowCardAdapter(l);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
