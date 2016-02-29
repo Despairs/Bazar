@@ -26,7 +26,6 @@ public class UserConfig {
         editor.putBoolean("rememberMe", rememberMe);
         editor.putString("user", user != null ? user.toString() : null);
         editor.commit();
-        printAll(ApplicationLoader.applicationContext.getSharedPreferences(cfgName, cfgMode));
     }
 
     public static void load() {

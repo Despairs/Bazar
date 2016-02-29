@@ -24,7 +24,6 @@ import org.investsoft.bazar.utils.UserConfig;
 
 public class WorkflowActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-
     private Fragment choosenFragment;
     private int choosenFragmentTitle;
 
@@ -43,10 +42,13 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ApplicationLoader.initApplication();
+        //If app was killed by task manager, clear personal data when last pref 'rememberMe' = false
+        boolean fromLoginActivity = getIntent().getBooleanExtra("fromLoginActivity", false);
+        if (!fromLoginActivity && !UserConfig.rememberMe) {
+            UserConfig.clearPersonalInfo();
+        }
         if (UserConfig.sessionId == null) {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            finish();
+            startLoginActivity();
             return;
         }
 
@@ -68,12 +70,12 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
             public void onDrawerClosed(View view) {
                 if (loggedOut) {
                     UserConfig.clearPersonalInfo();
-                    Intent i = new Intent(ApplicationLoader.applicationContext, LoginActivity.class);
-                    startActivity(i);
-                    finish();
+                    startLoginActivity();
                 }
                 //Change fragment only when drawer closed coz of animations
-                changeFragment(choosenFragment, choosenFragmentTitle, true);
+                //and add to backstack only when choosed not main workflow fragment
+                changeFragment(choosenFragment, choosenFragmentTitle);
+
                 super.onDrawerClosed(view);
             }
         };
@@ -89,6 +91,8 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
         aboutFragment = new AboutFragment();
         settingsFragment = new SettingsFragment();
         workflowFragment = new WorkflowFragment();
+        //WorkflowFragment = main screen
+        //onBackPressed must return to this workflow
         fm.beginTransaction()
                 .add(R.id.container_workflow, workflowFragment)
                 .commit();
@@ -131,8 +135,7 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
         } else {
             int stackSize = fm.getBackStackEntryCount();
             if (stackSize > 0) {
-                fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                changeFragment(workflowFragment, R.string.app_name, false);
+                changeFragment(workflowFragment, R.string.app_name);
             } else {
                 super.onBackPressed();
             }
@@ -161,24 +164,37 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if (!UserConfig.rememberMe) {
             UserConfig.clearPersonalInfo();
         }
-        super.onDestroy();
     }
 
-    private void changeFragment(Fragment fragment, int titleId, boolean addToBackStack) {
+    private void changeFragment(Fragment fragment, int titleId) {
         if (fragment == null) {
             return;
         }
-        FragmentTransaction tx = fm.beginTransaction().replace(R.id.container_workflow, fragment);
-        if (addToBackStack) {
+        if (fragment == workflowFragment) {
+            fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        } else {
+            FragmentTransaction tx = fm.beginTransaction().replace(R.id.container_workflow, fragment);
             tx.addToBackStack(null);
+            tx.commit();
         }
-        tx.commit();
         //Change toolbar title
-        getSupportActionBar().setTitle(titleId);
+        changeTitle(titleId);
         choosenFragment = null;
+        choosenFragmentTitle = 0;
+    }
+
+    private void changeTitle(int titleId) {
+        getSupportActionBar().setTitle(titleId);
+    }
+
+    private void startLoginActivity() {
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 }
 
