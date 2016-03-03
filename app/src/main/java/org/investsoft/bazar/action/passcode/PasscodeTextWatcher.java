@@ -30,6 +30,8 @@ public class PasscodeTextWatcher implements TextWatcher {
         if (s.length() == 4) {
             if (s.toString().equals("0000")) {
                 activity.finish();
+            } else {
+                s.clear();
             }
         }
     }

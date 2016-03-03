@@ -17,12 +17,15 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.investsoft.bazar.R;
+import org.investsoft.bazar.action.common.ToolbarHeaderHolder;
 import org.investsoft.bazar.action.login.LoginActivity;
 import org.investsoft.bazar.utils.AndroidUtils;
 import org.investsoft.bazar.utils.ApplicationLoader;
 import org.investsoft.bazar.utils.UserConfig;
+import org.investsoft.bazar.utils.events.EventManager;
+import org.investsoft.bazar.utils.events.EventType;
 
-public class WorkflowActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class WorkflowActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EventManager.EventReceiver {
 
     private Fragment choosenFragment;
     private int choosenFragmentTitle;
@@ -32,6 +35,8 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     private WorkflowFragment workflowFragment;
 
     private boolean loggedOut = false;
+
+    private ToolbarHeaderHolder headerHolder;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -84,7 +89,9 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerToggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_workflow);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.workflow_navigation);
+        headerHolder = new ToolbarHeaderHolder(navigationView.getHeaderView(0));
+        updateNavigationHeader();
         navigationView.setNavigationItemSelectedListener(this);
 
         //Init fragments
@@ -94,7 +101,7 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
         //WorkflowFragment = main screen
         //onBackPressed must return to this workflow
         fm.beginTransaction()
-                .add(R.id.container_workflow, workflowFragment)
+                .add(R.id.workflow_container, workflowFragment)
                 .commit();
     }
 
@@ -126,6 +133,14 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    @Override
+    public void onEventReceive(int eventId, Object... data) {
+        if (eventId == EventType.USER_DATA_CHANGED) {
+            updateNavigationHeader();
+        }
     }
 
     @Override
@@ -163,6 +178,18 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        EventManager.getInstance().registerReceiver(EventType.USER_DATA_CHANGED, this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventManager.getInstance().unregisterReceiver(EventType.USER_DATA_CHANGED, this);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (!UserConfig.rememberMe) {
@@ -177,18 +204,23 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
         if (fragment == workflowFragment) {
             fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         } else {
-            FragmentTransaction tx = fm.beginTransaction().replace(R.id.container_workflow, fragment);
+            FragmentTransaction tx = fm.beginTransaction().replace(R.id.workflow_container, fragment);
             tx.addToBackStack(null);
             tx.commit();
         }
         //Change toolbar title
-        changeTitle(titleId);
+        changeToolbarTitle(titleId);
         choosenFragment = null;
         choosenFragmentTitle = 0;
     }
 
-    private void changeTitle(int titleId) {
+    private void changeToolbarTitle(int titleId) {
         getSupportActionBar().setTitle(titleId);
+    }
+
+    private void updateNavigationHeader() {
+        headerHolder.getNameView().setText(UserConfig.user.getLastname() + " " + UserConfig.user.getName());
+        headerHolder.getEmailView().setText(UserConfig.user.getEmail());
     }
 
     private void startLoginActivity() {

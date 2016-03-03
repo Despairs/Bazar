@@ -17,7 +17,10 @@ import org.investsoft.bazar.action.common.AsyncTaskResponse;
 import org.investsoft.bazar.action.common.UpdateUserInfoTask;
 import org.investsoft.bazar.action.common.UserInfoHolder;
 import org.investsoft.bazar.api.model.base.User;
+import org.investsoft.bazar.utils.AndroidUtils;
 import org.investsoft.bazar.utils.UserConfig;
+import org.investsoft.bazar.utils.events.EventManager;
+import org.investsoft.bazar.utils.events.EventType;
 
 public class AboutFragment extends AsyncFragment implements UpdateUserInfoTask.IUpdateUserInfoTaskCallback {
 
@@ -30,12 +33,13 @@ public class AboutFragment extends AsyncFragment implements UpdateUserInfoTask.I
         View view = inflater.inflate(R.layout.fragment_about, container, false);
 
         userInfoHolder = new UserInfoHolder(view);
-        fillUserInfoFields(UserConfig.user);
+        fillUserInfoFields();
 
         Button updateInfoButton = (Button) view.findViewById(R.id.do_update_button);
         updateInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AndroidUtils.hideKeyboard(view);
                 attemptUpdate();
             }
         });
@@ -78,7 +82,7 @@ public class AboutFragment extends AsyncFragment implements UpdateUserInfoTask.I
             focusView.requestFocus();
         } else {
             showProgress(true);
-            updatedUserInfo = new User(lastname, name, surname, email, phone);
+            updatedUserInfo = new User(lastname, surname, name, email, phone);
             updateUserInfoTask = new UpdateUserInfoTask(updatedUserInfo, this);
             updateUserInfoTask.execute((Void) null);
 
@@ -91,6 +95,7 @@ public class AboutFragment extends AsyncFragment implements UpdateUserInfoTask.I
         if (result.isSuccess()) {
             UserConfig.user = updatedUserInfo;
             UserConfig.save();
+            EventManager.getInstance().sendEvent(EventType.USER_DATA_CHANGED);
             Toast.makeText(getActivity(), getString(R.string.toast_update_user_info), Toast.LENGTH_LONG).show();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -113,12 +118,12 @@ public class AboutFragment extends AsyncFragment implements UpdateUserInfoTask.I
         return getString(R.string.async_common);
     }
 
-    public void fillUserInfoFields(User user) {
-        userInfoHolder.getNameView().setText(user.getName());
-        userInfoHolder.getLastnameView().setText(user.getLastname());
-        userInfoHolder.getSurnameView().setText(user.getSurname());
-        userInfoHolder.getPhoneView().setText(user.getPhone());
-        userInfoHolder.getEmailView().setText(user.getEmail());
+    public void fillUserInfoFields() {
+        userInfoHolder.getNameView().setText(UserConfig.user.getName());
+        userInfoHolder.getLastnameView().setText(UserConfig.user.getLastname());
+        userInfoHolder.getSurnameView().setText(UserConfig.user.getSurname());
+        userInfoHolder.getPhoneView().setText(UserConfig.user.getPhone());
+        userInfoHolder.getEmailView().setText(UserConfig.user.getEmail());
 
     }
 
