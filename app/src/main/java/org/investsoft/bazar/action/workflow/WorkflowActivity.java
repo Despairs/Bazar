@@ -19,6 +19,7 @@ import android.view.View;
 import org.investsoft.bazar.R;
 import org.investsoft.bazar.action.common.ToolbarHeaderHolder;
 import org.investsoft.bazar.action.login.LoginActivity;
+import org.investsoft.bazar.action.passcode.PasscodeActivity;
 import org.investsoft.bazar.utils.AndroidUtils;
 import org.investsoft.bazar.utils.ApplicationLoader;
 import org.investsoft.bazar.utils.UserConfig;
@@ -46,6 +47,8 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = new Intent(this, PasscodeActivity.class);
+        startActivity(i);
         ApplicationLoader.initApplication();
         //If app was killed by task manager, clear personal data when last pref 'rememberMe' = false
         boolean fromLoginActivity = getIntent().getBooleanExtra("fromLoginActivity", false);
@@ -78,7 +81,7 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
                     startLoginActivity();
                 }
                 //Change fragment only when drawer closed coz of animations
-                //and add to backstack only when choosed not main workflow fragment
+                //and add to backstack only when choosed fragment is not main workflow fragment
                 changeFragment(choosenFragment, choosenFragmentTitle);
 
                 super.onDrawerClosed(view);

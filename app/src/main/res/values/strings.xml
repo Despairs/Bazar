@@ -10,6 +10,7 @@
     <string name="email">Email</string>
     <string name="password">Пароль</string>
     <string name="passcode">Введите код блокировки</string>
+    <string name="passcode_denied">Неправильный код</string>
     <!-- Strings related to buttons -->
     <string name="action_sign_in">Войти</string>
     <string name="action_registration">Зарегистрироваться</string>
@@ -43,9 +44,6 @@
     <string name="about">Обо мне</string>
     <string name="main">Главная</string>
     <string name="menu_user_logout">Выйти</string>
-
-    <!-- Strings related to BROADCASTS -->
-    <string name="broadcast_logout">org.investsoft.bazar.action.ACTION_LOGOUT</string>
 
     <!-- Strings related to preferences -->
     <string name="preferences_title_rememberMe">Запомнить профиль</string>

@@ -6,4 +6,7 @@
     <dimen name="status_bar_height">25dp</dimen>
     <dimen name="navigation_header_height">175dp</dimen>
     <dimen name="navigation_header_margin">5dp</dimen>
+    <dimen name="passcode_default_margin">90dp</dimen>
+    <dimen name="passcode_label_margin">45dp</dimen>
+    <dimen name="passcode_passfield_margin">10dp</dimen>
 </resources>
