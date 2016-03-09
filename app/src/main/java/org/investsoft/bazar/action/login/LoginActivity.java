@@ -123,7 +123,6 @@ public class LoginActivity extends AsyncActivity implements LoginView, OnClickLi
                 break;
             case R.id.registration_button:
                 startActivity(new Intent(this, RegistrationActivity.class));
-                finish();
                 break;
         }
     }

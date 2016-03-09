@@ -57,7 +57,7 @@ public class RegistrationActivity extends AsyncActivity implements View.OnClickL
 
     @Override
     public void navigateToLogin() {
-        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        Intent i = new Intent(this, LoginActivity.class);
         i.putExtra("email", userInfoHolder.getEmailView().getText().toString());
         startActivity(i);
         finish();
