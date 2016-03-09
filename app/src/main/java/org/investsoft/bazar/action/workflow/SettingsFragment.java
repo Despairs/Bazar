@@ -2,6 +2,7 @@ package org.investsoft.bazar.action.workflow;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.investsoft.bazar.R;
+import org.investsoft.bazar.action.passcode.PasscodeActivity;
 import org.investsoft.bazar.utils.UserConfig;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -24,6 +26,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         UserConfig.load();
+        switch (key) {
+            case "passcodeEnabled":
+                if (sharedPreferences.getBoolean(key, false)) {
+                    Intent i = new Intent(getActivity(), PasscodeActivity.class);
+                    startActivity(i);
+                } else {
+                    UserConfig.clearPasscodeInfo();
+                }
+                break;
+        }
+
     }
 
     @Override

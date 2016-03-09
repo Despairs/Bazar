@@ -122,7 +122,7 @@ public class LoginActivity extends AsyncActivity implements LoginTask.ILoginTask
             UserConfig.rememberMe = rememberCheckBox.isChecked();
             UserConfig.save();
             Intent i = new Intent(this, WorkflowActivity.class);
-            i.putExtra("fromLoginActivity", true);
+            i.putExtra("fromActivity", true);
             startActivity(i);
             finish();
         } else {

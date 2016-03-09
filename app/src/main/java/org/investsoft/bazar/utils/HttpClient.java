@@ -81,7 +81,7 @@ public class HttpClient {
     }
 
     public static Boolean isInternetConnected() {
-        ConnectivityManager cm = (ConnectivityManager) ApplicationLoader.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnectedOrConnecting();
+        return SystemServiceHolder.connectivityManager.getActiveNetworkInfo() != null
+                && SystemServiceHolder.connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 }

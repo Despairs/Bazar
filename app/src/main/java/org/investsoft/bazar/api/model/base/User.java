@@ -13,6 +13,7 @@ public class User {
     private String lastname;
     private String surname;
     private String phone;
+    private Boolean isConfirm;
 
     public User() {
 
@@ -77,5 +78,13 @@ public class User {
     @Override
     public String toString() {
         return JsonHelper.toJson(this);
+    }
+
+    public Boolean getIsConfirm() {
+        return isConfirm;
+    }
+
+    public void setIsConfirm(Boolean isConfirm) {
+        this.isConfirm = isConfirm;
     }
 }

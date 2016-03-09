@@ -9,7 +9,8 @@
     <!-- Common strings -->
     <string name="email">Email</string>
     <string name="password">Пароль</string>
-    <string name="passcode">Введите код блокировки</string>
+    <string name="passcode_default">Введите код блокировки</string>
+    <string name="passcode_confirm">Повторите введенный код блокировки</string>
     <string name="passcode_denied">Неправильный код</string>
     <!-- Strings related to buttons -->
     <string name="action_sign_in">Войти</string>
@@ -46,13 +47,17 @@
     <string name="menu_user_logout">Выйти</string>
 
     <!-- Strings related to preferences -->
+    <string name="preferences_header_account">Учетная запись</string>
+    <string name="preferences_header_security">Безопасность</string>
     <string name="preferences_title_rememberMe">Запомнить профиль</string>
+    <string name="preferences_title_passcode">Блокировка PIN-кодом</string>
     <!--<string name="preferences_title_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
     <!--<string name="preferences_title_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
     <!--<string name="preferences_title_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
     <!--<string name="preferences_title_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
 
     <string name="preferences_summary_rememberMe">Выполнять вход в приложение, используя последние учетные данные</string>
+    <string name="preferences_summary_passcode">Запрашивать PIN-код при возобновлении работы с приложением</string>
     <!--<string name="preferences_summary_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
     <!--<string name="preferences_summary_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->
     <!--<string name="preferences_summary_">org.investsoft.bazar.action.ACTION_LOGOUT</string>-->

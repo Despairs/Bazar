@@ -12,6 +12,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,12 +49,10 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent i = new Intent(this, PasscodeActivity.class);
-        startActivity(i);
         ApplicationLoader.initApplication();
         //If app was killed by task manager, clear personal data when last pref 'rememberMe' = false
-        boolean fromLoginActivity = getIntent().getBooleanExtra("fromLoginActivity", false);
-        if (!fromLoginActivity && !UserConfig.rememberMe) {
+        boolean fromActivity = getIntent().getBooleanExtra("fromActivity", false);
+        if (!fromActivity && !UserConfig.rememberMe) {
             UserConfig.clearPersonalInfo();
         }
         if (UserConfig.sessionId == null) {
@@ -183,12 +183,22 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("BAZAR", "ON RESUME; LOCKED = " + UserConfig.appLocked);
+        if (UserConfig.appLocked) {
+            Intent i = new Intent(this, PasscodeActivity.class);
+            startActivity(i);
+            finish();
+        }
         EventManager.getInstance().registerReceiver(EventType.USER_DATA_CHANGED, this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        if (UserConfig.passcodeEnabled && !TextUtils.isEmpty(UserConfig.passcodeHash)) {
+            UserConfig.appLocked = true;
+            UserConfig.save();
+        }
         EventManager.getInstance().unregisterReceiver(EventType.USER_DATA_CHANGED, this);
     }
 

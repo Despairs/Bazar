@@ -10,12 +10,14 @@
     tools:context=".PasscodeActivity">
 
     <TextView
+        android:id="@+id/passcode_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/passcode_label_margin"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/passcode"
-        android:layout_gravity="center" />
+        android:text="@string/passcode_default"
+        android:layout_gravity="center"
+        android:gravity="center" />
 
     <EditText
         android:id="@+id/passcode"

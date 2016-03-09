@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
-        android:key="rememberMe"
-        android:summary="@string/preferences_summary_rememberMe"
-        android:title="@string/preferences_title_rememberMe">
-    </CheckBoxPreference>
+    <PreferenceCategory android:title="@string/preferences_header_account">
+        <CheckBoxPreference
+            android:key="rememberMe"
+            android:summary="@string/preferences_summary_rememberMe"
+            android:title="@string/preferences_title_rememberMe"></CheckBoxPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/preferences_header_security">
+        <SwitchPreferenceCompat
+            android:key="passcodeEnabled"
+            android:summary="@string/preferences_summary_passcode"
+            android:title="@string/preferences_title_passcode"/>
+    </PreferenceCategory>
 </PreferenceScreen>

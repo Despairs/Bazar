@@ -2,8 +2,6 @@ package org.investsoft.bazar.utils;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.Build;
-import android.os.Handler;
 
 /**
  * Created by Despairs on 26.02.16.
@@ -25,5 +23,8 @@ public class ApplicationLoader extends Application {
         }
         applicationInited = true;
         UserConfig.load();
+//        UserConfig.passcodeHash = SecurityUtils.generatePasscodeHash("1234", true);
+//        UserConfig.save();
+        SystemServiceHolder.init();
     }
 }
