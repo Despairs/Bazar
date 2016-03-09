@@ -1,6 +1,8 @@
 package org.investsoft.bazar.action.common;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -12,7 +14,7 @@ public abstract class AsyncActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    protected void showProgress(boolean show) {
+    protected void showAsyncTaskProgress(boolean show) {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
             progressDialog.setMessage(getProgressDialogMessage());
@@ -25,5 +27,20 @@ public abstract class AsyncActivity extends AppCompatActivity {
             progressDialog.dismiss();
             progressDialog = null;
         }
+    }
+
+    protected void showAsyncTaskError(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Ошибка!")
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Окей",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
