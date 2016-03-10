@@ -19,6 +19,8 @@ import org.investsoft.bazar.action.workflow.WorkflowActivity;
 
 public class LoginActivity extends AsyncActivity implements LoginView, OnClickListener {
 
+    private static final int REG_ACTIVITY = 0;
+
     private LoginPresenter presenter = null;
 
     // UI references.
@@ -60,9 +62,7 @@ public class LoginActivity extends AsyncActivity implements LoginView, OnClickLi
 
     @Override
     public void navigateToWorkflow() {
-        Intent i = new Intent(this, WorkflowActivity.class);
-        i.putExtra("fromActivity", true);
-        startActivity(i);
+        startActivity(new Intent(this, WorkflowActivity.class));
         finish();
     }
 
@@ -76,15 +76,6 @@ public class LoginActivity extends AsyncActivity implements LoginView, OnClickLi
     public void setEmailError(int errorType) {
         emailView.requestFocus();
         emailView.setError(errorType == 0 ? getString(R.string.error_field_required) : getString(R.string.error_invalid_email));
-    }
-
-    @Override
-    public void setEmail() {
-        //Trying to get stored data or data from Intent
-        String email = getIntent().getStringExtra("email");
-        if (email != null && !email.isEmpty()) {
-            emailView.setText(email);
-        }
     }
 
     @Override
@@ -122,8 +113,20 @@ public class LoginActivity extends AsyncActivity implements LoginView, OnClickLi
                 presenter.attemptLogin(emailView.getText().toString(), passwordView.getText().toString());
                 break;
             case R.id.registration_button:
-                startActivity(new Intent(this, RegistrationActivity.class));
+                startActivityForResult(new Intent(this, RegistrationActivity.class), REG_ACTIVITY);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REG_ACTIVITY) {
+            if (resultCode == RESULT_OK){
+                String email = data.getStringExtra("email");
+                if (email != null && !email.isEmpty()) {
+                    emailView.setText(email);
+                }
+            }
         }
     }
 }

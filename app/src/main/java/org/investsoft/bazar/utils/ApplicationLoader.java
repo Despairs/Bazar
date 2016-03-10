@@ -22,9 +22,7 @@ public class ApplicationLoader extends Application {
             return;
         }
         applicationInited = true;
-        UserConfig.load();
-//        UserConfig.passcodeHash = SecurityUtils.generatePasscodeHash("1234", true);
-//        UserConfig.save();
+        UserConfig.init();
         SystemServiceHolder.init();
     }
 }

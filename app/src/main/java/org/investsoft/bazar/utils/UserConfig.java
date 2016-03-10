@@ -25,6 +25,14 @@ public class UserConfig {
     public static boolean passcodeEnabled = false;
     public static boolean appLocked = false;
 
+    public static void init() {
+        load();
+        if (sessionId != null && !rememberMe) {
+            clearPersonalInfo(true);
+            save();
+        }
+    }
+
     public static void save() {
         SharedPreferences.Editor editor = ApplicationLoader.applicationContext.getSharedPreferences(cfgName, cfgMode).edit();
         editor.putString("sessionId", sessionId);
@@ -64,10 +72,12 @@ public class UserConfig {
         save();
     }
 
-    public static void clearPersonalInfo() {
+    public static void clearPersonalInfo(boolean disableLock) {
         sessionId = null;
         user = null;
-        save();
+        if (disableLock) {
+            appLocked = false;
+        }
     }
 
     public static void clearPasscodeInfo() {
@@ -75,7 +85,6 @@ public class UserConfig {
         passcodeEnabled = false;
         passcodeHash = null;
         passcodeSalt = new byte[0];
-        save();
     }
 
     public static void printAll(SharedPreferences preferences) {

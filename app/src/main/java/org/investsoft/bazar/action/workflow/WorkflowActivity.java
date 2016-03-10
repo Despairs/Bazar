@@ -50,11 +50,7 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ApplicationLoader.initApplication();
-        //If app was killed by task manager, clear personal data when last pref 'rememberMe' = false
-        boolean fromActivity = getIntent().getBooleanExtra("fromActivity", false);
-        if (!fromActivity && !UserConfig.rememberMe) {
-            UserConfig.clearPersonalInfo();
-        }
+
         if (UserConfig.sessionId == null) {
             startLoginActivity();
             return;
@@ -77,7 +73,8 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onDrawerClosed(View view) {
                 if (loggedOut) {
-                    UserConfig.clearPersonalInfo();
+                    UserConfig.clearPersonalInfo(true);
+                    UserConfig.save();
                     startLoginActivity();
                 }
                 //Change fragment only when drawer closed coz of animations
@@ -183,7 +180,6 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("BAZAR", "ON RESUME; LOCKED = " + UserConfig.appLocked);
         if (UserConfig.appLocked) {
             Intent i = new Intent(this, PasscodeActivity.class);
             startActivity(i);
@@ -205,8 +201,8 @@ public class WorkflowActivity extends AppCompatActivity implements NavigationVie
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (!UserConfig.rememberMe) {
-            UserConfig.clearPersonalInfo();
+        if (!UserConfig.rememberMe && !UserConfig.appLocked) {
+            UserConfig.clearPersonalInfo(true);
         }
     }
 

@@ -13,8 +13,6 @@ public interface LoginView extends AsyncView  {
 
     public void setEmailError(int errorType);
 
-    public void setEmail();
-
     public void resetErrors();
 
     public boolean isRememberMe();

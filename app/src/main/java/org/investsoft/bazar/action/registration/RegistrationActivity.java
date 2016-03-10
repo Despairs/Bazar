@@ -22,7 +22,9 @@ public class RegistrationActivity extends AsyncActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        presenter = new RegistrationPresenter();
+        if (presenter == null) {
+            presenter = new RegistrationPresenter();
+        }
 
         userInfoHolder = new UserInfoHolder(findViewById(R.id.content_registration));
 
@@ -59,7 +61,7 @@ public class RegistrationActivity extends AsyncActivity implements View.OnClickL
     public void navigateToLogin() {
         Intent i = new Intent(this, LoginActivity.class);
         i.putExtra("email", userInfoHolder.getEmailView().getText().toString());
-        startActivity(i);
+        setResult(RESULT_OK, i);
         finish();
     }
 

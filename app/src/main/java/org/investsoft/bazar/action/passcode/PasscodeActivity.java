@@ -22,62 +22,25 @@ import org.investsoft.bazar.utils.SecurityUtils;
 import org.investsoft.bazar.utils.SystemServiceHolder;
 import org.investsoft.bazar.utils.UserConfig;
 
-public class PasscodeActivity extends AppCompatActivity {
+public class PasscodeActivity extends AppCompatActivity implements PasscodeView, TextWatcher {
 
     private EditText passcodeView;
     private TextView titleView;
 
-    private String newPasscode = null;
+    private PasscodePresenter presenter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passcode);
+
+        if (presenter == null) {
+            presenter = new PasscodePresenter();
+        }
+
         titleView = (TextView) findViewById(R.id.passcode_title);
         passcodeView = (EditText) findViewById(R.id.passcode);
-        passcodeView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() == 4) {
-                    if (TextUtils.isEmpty(UserConfig.passcodeHash)) {
-                        if (TextUtils.isEmpty(newPasscode)) {
-                            newPasscode = s.toString();
-                            titleView.setText(R.string.passcode_confirm);
-                            s.clear();
-                        } else {
-                            if (s.toString().equals(newPasscode)) {
-                                UserConfig.passcodeHash = SecurityUtils.generatePasscodeHash(newPasscode, true);
-                                UserConfig.save();
-                                finish();
-                            } else {
-                                s.clear();
-                                onError();
-                            }
-                        }
-                    } else {
-                        if (UserConfig.checkPasscode(s.toString())) {
-                            UserConfig.appLocked = false;
-                            UserConfig.save();
-                            Intent i = new Intent(ApplicationLoader.applicationContext, WorkflowActivity.class);
-                            i.putExtra("fromActivity", true);
-                            startActivity(i);
-                            finish();
-                        } else {
-                            s.clear();
-                            onError();
-                        }
-                    }
-                }
-            }
-        });
+        passcodeView.addTextChangedListener(this);
     }
 
     //Listener for virtual passcode keyboard
@@ -96,7 +59,24 @@ public class PasscodeActivity extends AppCompatActivity {
         AnimationUtils.changeTextColor(tv, Color.RED, Color.BLACK);
     }
 
-    public void onError() {
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.unbindView();
+        if (UserConfig.passcodeHash == null && UserConfig.passcodeEnabled) {
+            UserConfig.passcodeEnabled = false;
+            UserConfig.save();
+        }
+    }
+
+
+    @Override
+    public void setPasscodeConfirmTitle() {
+        titleView.setText(R.string.passcode_confirm);
+    }
+
+    @Override
+    public void showError() {
         if (SystemServiceHolder.vibrator != null) {
             SystemServiceHolder.vibrator.vibrate(200);
         }
@@ -104,14 +84,34 @@ public class PasscodeActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        if (UserConfig.passcodeHash == null && UserConfig.passcodeEnabled) {
-            UserConfig.passcodeEnabled = false;
-            UserConfig.save();
+    public void navigateToWorkflow(boolean onlyFinish) {
+        if (!onlyFinish) {
+            startActivity(new Intent(this, WorkflowActivity.class));
         }
+        setResult(RESULT_OK, null);
+        finish();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.bindView(this);
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        presenter.checkPasscode(s);
+    }
 
 }
 

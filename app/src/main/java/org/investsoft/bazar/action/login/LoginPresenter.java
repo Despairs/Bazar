@@ -12,11 +12,6 @@ public class LoginPresenter extends BasePresenter<LoginView> implements LoginTas
 
     private LoginTask loginTask = null;
 
-    public void bindView(LoginView view) {
-        super.bindView(view);
-        view.setEmail();
-    }
-
     public void attemptLogin(String email, String password) {
         if (loginTask != null) {
             return;
