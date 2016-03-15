@@ -1,8 +1,9 @@
 package org.investsoft.bazar.api;
 
-import org.investsoft.bazar.api.model.ApiException;
-import org.investsoft.bazar.api.model.get.HttpGetRequest;
-import org.investsoft.bazar.api.model.post.HttpPostRequest;
+import org.investsoft.bazar.api.model.base.ApiException;
+import org.investsoft.bazar.api.model.base.ApiResponse;
+import org.investsoft.bazar.api.model.base.HttpGetRequest;
+import org.investsoft.bazar.api.model.base.HttpPostRequest;
 import org.investsoft.bazar.utils.HttpClient;
 import org.investsoft.bazar.utils.JsonHelper;
 
@@ -34,6 +35,12 @@ public abstract class ApiMethodExecuter<Request, Response> {
             jsonResp = request instanceof HttpPostRequest ? client.sendPostRequest(jsonReq) : client.sendPutRequest(jsonReq);
         }
         response = (Response) JsonHelper.parseJson(jsonResp, response.getClass());
+        if (response instanceof ApiResponse) {
+            ApiResponse apiResponse = (ApiResponse) response;
+            if (apiResponse.getCode() != 0) {
+                throw new ApiException(((ApiResponse) response).getMessage(), ((ApiResponse) response).getCode());
+            }
+        }
         return response;
     }
 }

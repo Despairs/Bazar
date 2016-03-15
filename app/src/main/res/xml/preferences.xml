@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/preferences_header_account">
+        <Preference
+            android:title="@string/preferences_title_changePassword">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetPackage="org.investsoft.bazar"
+                android:targetClass="org.investsoft.bazar.ui.ChangePasswordActivity" />
+        </Preference>
         <CheckBoxPreference
             android:key="rememberMe"
             android:summary="@string/preferences_summary_rememberMe"
-            android:title="@string/preferences_title_rememberMe"></CheckBoxPreference>
+            android:title="@string/preferences_title_rememberMe"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/preferences_header_security">
@@ -12,5 +19,10 @@
             android:key="passcodeEnabled"
             android:summary="@string/preferences_summary_passcode"
             android:title="@string/preferences_title_passcode"/>
+        <ListPreference
+            android:key="autoLockIn"
+            android:entries="@array/AutoLockInPreferenceKeys"
+            android:entryValues="@array/AutoLockInPreferenceValues"
+            android:title="@string/preferences_title_autoLockIn"/>
     </PreferenceCategory>
 </PreferenceScreen>

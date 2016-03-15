@@ -14,21 +14,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".action.login.LoginActivity"
-            android:label="@string/app_name">
-        </activity>
-        <activity android:name=".action.passcode.PasscodeActivity" />
+            android:name=".ui.LoginActivity"
+            android:label="@string/app_name"></activity>
         <activity
-            android:name=".action.registration.RegistrationActivity"
-            android:label="@string/title_activity_registration"
-            android:parentActivityName=".action.login.LoginActivity"
+            android:name=".ui.ChangePasswordActivity"
+            android:parentActivityName=".ui.WorkflowActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".action.login.LoginActivity" />
+                android:value=".ui.WorkflowActivity" />
+        </activity>
+        <activity android:name=".ui.PasscodeActivity" />
+        <activity
+            android:name=".ui.RegistrationActivity"
+            android:label="@string/title_activity_registration"
+            android:parentActivityName=".ui.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.LoginActivity" />
         </activity>
         <activity
-            android:name=".action.workflow.WorkflowActivity"
+            android:name=".ui.WorkflowActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

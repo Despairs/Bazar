@@ -1,5 +1,7 @@
 package org.investsoft.bazar.api.model.get;
 
+import org.investsoft.bazar.api.model.base.HttpGetRequest;
+
 /**
  * Created by Despairs on 15.01.16.
  */

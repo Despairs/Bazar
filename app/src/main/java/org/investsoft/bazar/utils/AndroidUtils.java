@@ -43,11 +43,46 @@ public class AndroidUtils {
         SystemServiceHolder.inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    public static boolean needShowPasscode(boolean reset) {
+        boolean wasInBackground;
+        if (Build.VERSION.SDK_INT >= 14) {
+            wasInBackground = ForegroundDetector.getInstance().isWasInBackground(reset);
+            if (reset) {
+                ForegroundDetector.getInstance().resetBackgroundVar();
+            }
+        } else {
+            wasInBackground = UserConfig.lastPauseTime != 0;
+        }
+        return UserConfig.passcodeEnabled && wasInBackground &&
+                (UserConfig.autoLockIn == 0 || (UserConfig.autoLockIn != 0 && UserConfig.lastPauseTime != 0
+                        && (System.currentTimeMillis() - UserConfig.lastPauseTime) >= UserConfig.autoLockIn * 1000));
+    }
+
+
     public static int dp(float value) {
         if (value == 0) {
             return 0;
         }
         return (int) Math.ceil(density * value);
+    }
+
+    public static void runOnUIThread(Runnable runnable) {
+        runOnUIThread(runnable, 0);
+    }
+
+    public static void runOnUIThread(Runnable runnable, long delay) {
+        if (runnable == null) {
+            return;
+        }
+        if (delay == 0) {
+            ApplicationLoader.applicationHandler.post(runnable);
+        } else {
+            ApplicationLoader.applicationHandler.postDelayed(runnable, delay);
+        }
+    }
+
+    public static void cancelRunOnUIThread(Runnable runnable) {
+        ApplicationLoader.applicationHandler.removeCallbacks(runnable);
     }
 
 }

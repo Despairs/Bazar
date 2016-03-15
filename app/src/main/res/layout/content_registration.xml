@@ -12,7 +12,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:id="@+id/content_registration"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".action.registration.RegistrationActivity"
+    tools:context=".ui.RegistrationActivity"
     tools:showIn="@layout/activity_registration">
 
     <android.support.design.widget.TextInputLayout

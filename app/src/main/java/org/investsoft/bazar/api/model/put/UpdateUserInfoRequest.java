@@ -1,5 +1,6 @@
 package org.investsoft.bazar.api.model.put;
 
+import org.investsoft.bazar.api.model.base.HttpPutRequest;
 import org.investsoft.bazar.api.model.base.User;
 
 /**

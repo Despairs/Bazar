@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/navigation_header_height"
-    tools:context=".action.workflow.WorkflowActivity"
+    tools:context=".ui.WorkflowActivity"
     android:background="@color/primary_material_dark"
     android:orientation="vertical"
     android:paddingTop="@dimen/status_bar_height"
