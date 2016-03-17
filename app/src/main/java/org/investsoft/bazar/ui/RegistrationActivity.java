@@ -8,6 +8,7 @@ import android.view.View;
 import org.investsoft.bazar.R;
 import org.investsoft.bazar.app.presenter.RegistrationPresenter;
 import org.investsoft.bazar.app.view.RegistrationView;
+import org.investsoft.bazar.ui.common.AsyncActivity;
 import org.investsoft.bazar.ui.holder.UserInfoHolder;
 
 public class RegistrationActivity extends AsyncActivity implements View.OnClickListener, RegistrationView {

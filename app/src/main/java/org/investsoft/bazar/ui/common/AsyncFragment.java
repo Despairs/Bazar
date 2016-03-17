@@ -1,7 +1,7 @@
-package org.investsoft.bazar.ui;
+package org.investsoft.bazar.ui.common;
 
+import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.support.v4.app.Fragment;
 
 /**
  * Created by Despairs on 19.01.16.

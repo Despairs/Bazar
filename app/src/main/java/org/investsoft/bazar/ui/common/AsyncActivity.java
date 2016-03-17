@@ -1,4 +1,4 @@
-package org.investsoft.bazar.ui;
+package org.investsoft.bazar.ui.common;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;

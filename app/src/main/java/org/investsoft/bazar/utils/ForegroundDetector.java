@@ -79,4 +79,6 @@ public class ForegroundDetector implements Application.ActivityLifecycleCallback
     @Override
     public void onActivityDestroyed(Activity activity) {
     }
+
+
 }

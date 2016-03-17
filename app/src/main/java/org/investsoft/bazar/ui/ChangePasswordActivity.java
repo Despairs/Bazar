@@ -8,6 +8,7 @@ import android.widget.EditText;
 import org.investsoft.bazar.R;
 import org.investsoft.bazar.app.presenter.ChangePasswordPresenter;
 import org.investsoft.bazar.app.view.ChangePasswordView;
+import org.investsoft.bazar.ui.common.AsyncActivity;
 
 /**
  * Created by Despairs on 13.03.16.

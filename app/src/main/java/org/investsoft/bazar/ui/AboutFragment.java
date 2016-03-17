@@ -13,6 +13,7 @@ import android.widget.Toast;
 import org.investsoft.bazar.R;
 import org.investsoft.bazar.app.task.model.AsyncTaskResponse;
 import org.investsoft.bazar.app.task.UpdateUserInfoTask;
+import org.investsoft.bazar.ui.common.AsyncFragment;
 import org.investsoft.bazar.ui.holder.UserInfoHolder;
 import org.investsoft.bazar.api.model.base.User;
 import org.investsoft.bazar.utils.AndroidUtils;

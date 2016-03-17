@@ -2,58 +2,45 @@ package org.investsoft.bazar.ui;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.preference.ListPreference;
-import android.support.v7.preference.PreferenceFragmentCompat;
-import android.support.v7.preference.SwitchPreferenceCompat;
+import android.preference.ListPreference;
+import android.preference.SwitchPreference;
 
 import org.investsoft.bazar.R;
+import org.investsoft.bazar.ui.common.BaseSettingFragment;
 import org.investsoft.bazar.utils.UserConfig;
 
-public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SecuritySettingsFragment extends BaseSettingFragment {
 
     private static int CREATE_PASSCODE = 0;
 
-    private SwitchPreferenceCompat passcodeEnabledPreference;
+    private SwitchPreference passcodeEnabledPreference;
     private ListPreference autoLockInPreference;
 
     @Override
-    public void onCreatePreferences(Bundle bundle, String s) {
-        getPreferenceManager().setSharedPreferencesName(UserConfig.cfgName);
-        getPreferenceManager().setSharedPreferencesMode(UserConfig.cfgMode);
-        addPreferencesFromResource(R.xml.preferences);
-        passcodeEnabledPreference = (SwitchPreferenceCompat) findPreference("passcodeEnabled");
-        autoLockInPreference = (ListPreference) findPreference("autoLockIn");
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        UserConfig.load();
+    protected void onSharedPreferenceChanged(String key) {
         switch (key) {
             case "passcodeEnabled":
-                UserConfig.load();
                 startActivityForResult(new Intent(getActivity(), PasscodeActivity.class), CREATE_PASSCODE);
                 break;
         }
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    protected int getPreferenceResourceId() {
+        return R.xml.preferences_security;
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        passcodeEnabledPreference = (SwitchPreference) findPreference("passcodeEnabled");
+        autoLockInPreference = (ListPreference) findPreference("autoLockIn");
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CREATE_PASSCODE) {
-
             switch (resultCode) {
                 case 0:
                     //If request cancelled - disable switch widget

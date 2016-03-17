@@ -10,6 +10,7 @@ import android.widget.EditText;
 import org.investsoft.bazar.R;
 import org.investsoft.bazar.app.presenter.LoginPresenter;
 import org.investsoft.bazar.app.view.LoginView;
+import org.investsoft.bazar.ui.common.AsyncActivity;
 
 
 /**

@@ -24,6 +24,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.WorkflowActivity" />
         </activity>
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:label="@string/preferences"
+            android:parentActivityName=".ui.WorkflowActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.WorkflowActivity" />
+        </activity>
         <activity android:name=".ui.PasscodeActivity" />
         <activity
             android:name=".ui.RegistrationActivity"
