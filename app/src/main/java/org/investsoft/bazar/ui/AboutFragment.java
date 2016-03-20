@@ -23,6 +23,17 @@ import org.investsoft.bazar.utils.events.EventType;
 
 public class AboutFragment extends AsyncFragment implements UpdateUserInfoTask.IUpdateUserInfoTaskCallback {
 
+    private static AboutFragment instance = null;
+
+    public static AboutFragment getInstance() {
+        if (instance == null) {
+            instance = new AboutFragment();
+        }
+        return instance;
+    }
+
+    private AboutFragment(){}
+
     private UserInfoHolder userInfoHolder;
     private User updatedUserInfo = null;
     private UpdateUserInfoTask updateUserInfoTask = null;

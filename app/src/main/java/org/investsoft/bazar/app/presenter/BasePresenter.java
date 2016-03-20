@@ -14,4 +14,8 @@ public class BasePresenter<View> {
     public void unbindView() {
         view = null;
     }
+
+    public boolean isBinded() {
+        return view != null;
+    }
 }

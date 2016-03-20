@@ -6,8 +6,6 @@ import android.view.MenuItem;
 import org.investsoft.bazar.R;
 import org.investsoft.bazar.ui.common.AppCompatPreferenceActivity;
 import org.investsoft.bazar.utils.AndroidUtils;
-import org.investsoft.bazar.utils.events.EventManager;
-import org.investsoft.bazar.utils.events.EventType;
 
 import java.util.List;
 

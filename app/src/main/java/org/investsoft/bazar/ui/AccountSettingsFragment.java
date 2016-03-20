@@ -8,7 +8,6 @@ public class AccountSettingsFragment extends BaseSettingFragment {
 
     @Override
     protected void onSharedPreferenceChanged(String key) {
-        return;
     }
 
     @Override

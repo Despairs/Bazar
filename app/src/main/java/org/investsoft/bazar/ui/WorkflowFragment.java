@@ -16,6 +16,15 @@ import java.util.List;
 
 public class WorkflowFragment extends Fragment {
 
+    private static WorkflowFragment instance = null;
+
+    public static WorkflowFragment getInstance() {
+        if (instance == null) {
+            instance = new WorkflowFragment();
+        }
+        return instance;
+    }
+
     private RecyclerView recyclerView;
     private WorkflowCardAdapter adapter;
 
