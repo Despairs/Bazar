@@ -1,5 +1,7 @@
 package org.investsoft.bazar.api.model.post;
 
+import org.investsoft.bazar.api.model.base.HttpPostRequest;
+
 /**
  * Created by Despairs on 15.01.16.
  */

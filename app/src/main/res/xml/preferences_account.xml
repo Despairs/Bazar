@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+        <Preference
+            android:title="@string/preferences_title_changePassword">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetPackage="org.investsoft.bazar"
+                android:targetClass="org.investsoft.bazar.ui.ChangePasswordActivity" />
+        </Preference>
+        <CheckBoxPreference
+            android:key="rememberMe"
+            android:summary="@string/preferences_summary_rememberMe"
+            android:title="@string/preferences_title_rememberMe"/>
+</PreferenceScreen>

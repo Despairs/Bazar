@@ -2,6 +2,7 @@ package org.investsoft.bazar.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
@@ -23,7 +24,16 @@ public class UserConfig {
     public static String passcodeHash = null;
     public static byte[] passcodeSalt = new byte[0];
     public static boolean passcodeEnabled = false;
-    public static boolean appLocked = false;
+    public static long autoLockIn = 30;
+    public static long lastPauseTime = 0;
+
+    public static void init() {
+        load();
+        if (sessionId != null && !rememberMe) {
+            clearPersonalInfo();
+            save();
+        }
+    }
 
     public static void save() {
         SharedPreferences.Editor editor = ApplicationLoader.applicationContext.getSharedPreferences(cfgName, cfgMode).edit();
@@ -32,8 +42,9 @@ public class UserConfig {
         editor.putString("user", user != null ? user.toString() : null);
         editor.putString("passcodeHash", passcodeHash);
         editor.putString("passcodeSalt", passcodeSalt.length > 0 ? Base64.encodeToString(passcodeSalt, Base64.DEFAULT) : "");
-        editor.putBoolean("appLocked", appLocked);
         editor.putBoolean("passcodeEnabled", passcodeEnabled);
+        editor.putString("lastPauseTime", String.valueOf(lastPauseTime));
+        editor.putString("autoLockIn", String.valueOf(autoLockIn));
         editor.commit();
     }
 
@@ -42,7 +53,6 @@ public class UserConfig {
         sessionId = preferences.getString("sessionId", null);
         rememberMe = preferences.getBoolean("rememberMe", false);
         passcodeHash = preferences.getString("passcodeHash", "");
-        appLocked = preferences.getBoolean("appLocked", false);
         passcodeEnabled = preferences.getBoolean("passcodeEnabled", false);
         user = JsonHelper.parseJson(preferences.getString("user", null), User.class);
         String passcodeSaltString = preferences.getString("passcodeSalt", "");
@@ -51,6 +61,8 @@ public class UserConfig {
         } else {
             passcodeSalt = new byte[0];
         }
+        lastPauseTime = Long.parseLong(preferences.getString("lastPauseTime", "0"));
+        autoLockIn = Long.parseLong(preferences.getString("autoLockIn", "30"));
         printAll(preferences);
     }
 
@@ -60,22 +72,26 @@ public class UserConfig {
         rememberMe = false;
         passcodeHash = null;
         passcodeSalt = new byte[0];
-        appLocked = false;
+        lastPauseTime = 0;
+        autoLockIn = 0;
         save();
+    }
+
+    public static void forceClear() {
+        ApplicationLoader.applicationContext.getSharedPreferences(cfgName, cfgMode).edit().clear().commit();
     }
 
     public static void clearPersonalInfo() {
         sessionId = null;
         user = null;
-        save();
+        lastPauseTime = 0;
     }
 
     public static void clearPasscodeInfo() {
-        appLocked = false;
         passcodeEnabled = false;
         passcodeHash = null;
         passcodeSalt = new byte[0];
-        save();
+        lastPauseTime = 0;
     }
 
     public static void printAll(SharedPreferences preferences) {
@@ -97,6 +113,6 @@ public class UserConfig {
             return passcodeHash.equals(hash);
 
         }
-
     }
+
 }

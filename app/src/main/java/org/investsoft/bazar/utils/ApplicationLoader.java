@@ -2,6 +2,7 @@ package org.investsoft.bazar.utils;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 
 /**
  * Created by Despairs on 26.02.16.
@@ -9,12 +10,15 @@ import android.content.Context;
 public class ApplicationLoader extends Application {
 
     public static volatile Context applicationContext;
+    public static volatile Handler applicationHandler;
     private static volatile boolean applicationInited = false;
 
     @Override
     public void onCreate() {
         super.onCreate();
         applicationContext = getApplicationContext();
+        applicationHandler = new Handler(applicationContext.getMainLooper());
+        new ForegroundDetector(this);
     }
 
     public static void initApplication() {
@@ -22,9 +26,9 @@ public class ApplicationLoader extends Application {
             return;
         }
         applicationInited = true;
-        UserConfig.load();
-//        UserConfig.passcodeHash = SecurityUtils.generatePasscodeHash("1234", true);
-//        UserConfig.save();
+//        UserConfig.forceClear();
+        UserConfig.init();
         SystemServiceHolder.init();
     }
+
 }
