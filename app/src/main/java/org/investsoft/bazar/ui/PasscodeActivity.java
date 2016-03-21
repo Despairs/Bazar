@@ -3,9 +3,12 @@ package org.investsoft.bazar.ui;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,6 +25,8 @@ public class PasscodeActivity extends AppCompatActivity implements PasscodeView,
     private EditText passcodeView;
     private TextView titleView;
 
+    private TextView logoutView;
+
     private PasscodePresenter presenter = null;
 
     @Override
@@ -36,20 +41,39 @@ public class PasscodeActivity extends AppCompatActivity implements PasscodeView,
         titleView = (TextView) findViewById(R.id.passcode_title);
         passcodeView = (EditText) findViewById(R.id.passcode);
         passcodeView.addTextChangedListener(this);
+
+        logoutView = (TextView) findViewById(R.id.passcode_logout_button);
+
+        boolean showLogout = UserConfig.passcodeEnabled && !TextUtils.isEmpty(UserConfig.passcodeHash);
+        logoutView.setVisibility(showLogout ? View.VISIBLE : View.INVISIBLE);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(!showLogout);
+        }
     }
 
     //Listener for virtual passcode keyboard
-    public void onClick(View v) {
+    public void onNumberClick(View v) {
         passcodeView.setError(null);
         TextView tv = (TextView) v;
         AnimationUtils.changeTextColor(tv, Color.BLACK, Color.RED);
-        if (tv.getText().length() == 1) {
-            passcodeView.append(tv.getText());
-        } else {
-            int length = passcodeView.getText().length();
-            if (length != 0) {
-                passcodeView.getText().delete(length - 1, length);
-            }
+        passcodeView.append(tv.getText());
+        AnimationUtils.changeTextColor(tv, Color.RED, Color.BLACK);
+    }
+
+    public void onButtonClick(View v) {
+        TextView tv = (TextView) v;
+        AnimationUtils.changeTextColor(tv, Color.BLACK, Color.RED);
+        switch (v.getId()) {
+            case R.id.passcode_clear_button:
+                int length = passcodeView.getText().length();
+                if (length != 0) {
+                    passcodeView.getText().delete(length - 1, length);
+                }
+                break;
+            case R.id.passcode_logout_button:
+                presenter.onLogoutClick();
+                break;
         }
         AnimationUtils.changeTextColor(tv, Color.RED, Color.BLACK);
     }
@@ -63,7 +87,6 @@ public class PasscodeActivity extends AppCompatActivity implements PasscodeView,
             UserConfig.save();
         }
     }
-
 
     @Override
     public void setPasscodeConfirmTitle() {
@@ -106,6 +129,12 @@ public class PasscodeActivity extends AppCompatActivity implements PasscodeView,
     @Override
     public void afterTextChanged(Editable s) {
         presenter.checkPasscode(s);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return true;
     }
 
 }

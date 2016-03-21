@@ -15,6 +15,7 @@
     <string name="passcode_default">Введите код блокировки</string>
     <string name="passcode_confirm">Повторите введенный код блокировки</string>
     <string name="passcode_denied">Неправильный код</string>
+    <string name="delete_char">Стереть</string>
     <!-- Strings related to buttons -->
     <string name="action_sign_in">Войти</string>
     <string name="action_registration">Зарегистрироваться</string>
@@ -48,12 +49,12 @@
     <string name="menu_user">Пользователь</string>
     <string name="about">Обо мне</string>
     <string name="main">Главная</string>
-    <string name="menu_user_logout">Выйти</string>
+    <string name="logout">Выйти</string>
 
     <!-- Strings related to preferences -->
     <string name="preferences_header_account">Учетная запись</string>
     <string name="preferences_header_security">Безопасность</string>
-    <string name="preferences_title_changePassword">Изменить пароль</string>
+    <string name="change_password">Смена пароля</string>
     <string name="preferences_title_rememberMe">Запомнить профиль</string>
     <string name="preferences_title_passcode">Блокировка PIN-кодом</string>
     <string name="preferences_title_autoLockIn">Интервал блокировки</string>

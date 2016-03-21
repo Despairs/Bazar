@@ -1,7 +1,9 @@
 package org.investsoft.bazar.ui;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -36,9 +38,6 @@ public class ChangePasswordActivity extends AsyncActivity implements ChangePassw
         //Set listener to buttons
         findViewById(R.id.change_password_button).setOnClickListener(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -100,4 +99,11 @@ public class ChangePasswordActivity extends AsyncActivity implements ChangePassw
         super.onPause();
         presenter.unbindView();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return true;
+    }
+
 }

@@ -21,7 +21,7 @@
         <item
             android:id="@+id/menu_workflow_logout"
             android:icon="@drawable/ic_menu_send"
-            android:title="@string/menu_user_logout" />
+            android:title="@string/logout" />
     </group>
 
 </menu>

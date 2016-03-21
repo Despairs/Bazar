@@ -37,12 +37,6 @@ public class PasscodePresenter extends BasePresenter<PasscodeView> {
                 }
             } else {
                 if (UserConfig.checkPasscode(s.toString())) {
-//                    boolean onlyFinish = true;
-//                    if (unconfirmedPasscode != null) {
-//                        UserConfig.appLocked = false;
-//                        onlyFinish = false;
-//                        UserConfig.save();
-//                    }
                     view.navigateToWorkflow(!UserConfig.passcodeEnabled);
                 } else {
                     s.clear();
@@ -52,5 +46,12 @@ public class PasscodePresenter extends BasePresenter<PasscodeView> {
         }
     }
 
+    public void onLogoutClick() {
+        if (UserConfig.passcodeEnabled) {
+            UserConfig.clearPersonalInfo();
+            UserConfig.save();
+        }
+        view.navigateToWorkflow(false);
+    }
 
 }

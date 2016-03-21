@@ -36,6 +36,7 @@ public class SecuritySettingsFragment extends BaseSettingFragment {
         super.onCreate(savedInstanceState);
         passcodeEnabledPreference = (SwitchPreference) findPreference("passcodeEnabled");
         autoLockInPreference = (ListPreference) findPreference("autoLockIn");
+        autoLockInPreference.setEnabled(passcodeEnabledPreference.isChecked());
     }
 
     @Override

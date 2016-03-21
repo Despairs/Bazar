@@ -19,7 +19,7 @@
         <activity
             android:name=".ui.ChangePasswordActivity"
             android:parentActivityName=".ui.WorkflowActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/change_password">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.WorkflowActivity" />
@@ -32,7 +32,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.WorkflowActivity" />
         </activity>
-        <activity android:name=".ui.PasscodeActivity" />
+        <activity android:name=".ui.PasscodeActivity"
+            android:label="@string/preferences_title_passcode"/>
         <activity
             android:name=".ui.RegistrationActivity"
             android:label="@string/title_activity_registration"
