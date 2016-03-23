@@ -82,6 +82,7 @@ public class UserConfig {
     }
 
     public static void clearPersonalInfo() {
+        rememberMe = false;
         sessionId = null;
         user = null;
         lastPauseTime = 0;

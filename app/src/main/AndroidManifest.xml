@@ -33,7 +33,7 @@
                 android:value=".ui.WorkflowActivity" />
         </activity>
         <activity android:name=".ui.PasscodeActivity"
-            android:label="@string/preferences_title_passcode"/>
+            android:label="@string/app_name"/>
         <activity
             android:name=".ui.RegistrationActivity"
             android:label="@string/title_activity_registration"

@@ -16,6 +16,10 @@
     <string name="passcode_confirm">Повторите введенный код блокировки</string>
     <string name="passcode_denied">Неправильный код</string>
     <string name="delete_char">Стереть</string>
+    <string name="dialog_ok">Да</string>
+    <string name="dialog_no">Отмена</string>
+    <string name="dialog_logout">Вы уверены, что хотите выйти?</string>
+    <string name="dialog_logout_title">Выход</string>
     <!-- Strings related to buttons -->
     <string name="action_sign_in">Войти</string>
     <string name="action_registration">Зарегистрироваться</string>

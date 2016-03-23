@@ -53,9 +53,9 @@ public class AndroidUtils {
         } else {
             wasInBackground = UserConfig.lastPauseTime != 0;
         }
-        return UserConfig.passcodeEnabled && wasInBackground &&
-                (UserConfig.autoLockIn == 0 || (UserConfig.autoLockIn != 0 && UserConfig.lastPauseTime != 0
-                        && (System.currentTimeMillis() - UserConfig.lastPauseTime) >= UserConfig.autoLockIn * 1000));
+        return UserConfig.passcodeEnabled && wasInBackground && UserConfig.lastPauseTime != 0 &&
+                (UserConfig.autoLockIn == 0
+                        || (UserConfig.autoLockIn != 0 && (System.currentTimeMillis() - UserConfig.lastPauseTime) >= UserConfig.autoLockIn * 1000));
     }
 
 

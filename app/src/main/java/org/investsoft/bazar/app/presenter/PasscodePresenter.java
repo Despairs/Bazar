@@ -47,6 +47,10 @@ public class PasscodePresenter extends BasePresenter<PasscodeView> {
     }
 
     public void onLogoutClick() {
+        view.showLogoutDialog();
+    }
+
+    public void onLogoutOkClick() {
         if (UserConfig.passcodeEnabled) {
             UserConfig.clearPersonalInfo();
             UserConfig.save();

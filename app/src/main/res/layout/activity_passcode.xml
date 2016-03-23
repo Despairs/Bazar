@@ -132,14 +132,24 @@
             android:layout_height="match_parent"
             android:gravity="center">
 
-            <TextView
+            <!--<TextView-->
+                <!--android:id="@+id/passcode_logout_button"-->
+                <!--android:layout_width="@dimen/passcode_default_margin"-->
+                <!--android:layout_height="@dimen/passcode_default_margin"-->
+                <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+                <!--android:text="@string/logout"-->
+                <!--android:gravity="center"-->
+                <!--android:onClick="onButtonClick"-->
+                <!--android:layout_column="0" />-->
+
+            <ImageView
                 android:id="@+id/passcode_logout_button"
                 android:layout_width="@dimen/passcode_default_margin"
                 android:layout_height="@dimen/passcode_default_margin"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/logout"
-                android:gravity="center"
-                android:onClick="onButtonClick"
+                android:onClick="onImageClick"
+                android:src="@drawable/ic_close_black_24dp"
+                android:scaleType="center"
                 android:layout_column="0" />
 
             <TextView
@@ -151,14 +161,23 @@
                 android:onClick="onNumberClick"
                 android:layout_column="1" />
 
-            <TextView
+            <!--<TextView-->
+                <!--android:id="@+id/passcode_clear_button"-->
+                <!--android:layout_width="@dimen/passcode_default_margin"-->
+                <!--android:layout_height="@dimen/passcode_default_margin"-->
+                <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+                <!--android:text="@string/delete_char"-->
+                <!--android:gravity="center"-->
+                <!--android:onClick="onButtonClick"-->
+                <!--android:layout_column="2" />-->
+            <ImageView
                 android:id="@+id/passcode_clear_button"
                 android:layout_width="@dimen/passcode_default_margin"
                 android:layout_height="@dimen/passcode_default_margin"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/delete_char"
-                android:gravity="center"
-                android:onClick="onButtonClick"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:scaleType="center"
+                android:onClick="onImageClick"
                 android:layout_column="2" />
         </TableRow>
     </TableLayout>

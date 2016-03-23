@@ -1,9 +1,11 @@
 package org.investsoft.bazar.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -11,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.investsoft.bazar.R;
@@ -25,7 +28,7 @@ public class PasscodeActivity extends AppCompatActivity implements PasscodeView,
     private EditText passcodeView;
     private TextView titleView;
 
-    private TextView logoutView;
+    private ImageView logoutView;
 
     private PasscodePresenter presenter = null;
 
@@ -42,7 +45,7 @@ public class PasscodeActivity extends AppCompatActivity implements PasscodeView,
         passcodeView = (EditText) findViewById(R.id.passcode);
         passcodeView.addTextChangedListener(this);
 
-        logoutView = (TextView) findViewById(R.id.passcode_logout_button);
+        logoutView = (ImageView) findViewById(R.id.passcode_logout_button);
 
         boolean showLogout = UserConfig.passcodeEnabled && !TextUtils.isEmpty(UserConfig.passcodeHash);
         logoutView.setVisibility(showLogout ? View.VISIBLE : View.INVISIBLE);
@@ -61,9 +64,7 @@ public class PasscodeActivity extends AppCompatActivity implements PasscodeView,
         AnimationUtils.changeTextColor(tv, Color.RED, Color.BLACK);
     }
 
-    public void onButtonClick(View v) {
-        TextView tv = (TextView) v;
-        AnimationUtils.changeTextColor(tv, Color.BLACK, Color.RED);
+    public void onImageClick(View v) {
         switch (v.getId()) {
             case R.id.passcode_clear_button:
                 int length = passcodeView.getText().length();
@@ -75,7 +76,6 @@ public class PasscodeActivity extends AppCompatActivity implements PasscodeView,
                 presenter.onLogoutClick();
                 break;
         }
-        AnimationUtils.changeTextColor(tv, Color.RED, Color.BLACK);
     }
 
     @Override
@@ -135,6 +135,26 @@ public class PasscodeActivity extends AppCompatActivity implements PasscodeView,
     public boolean onOptionsItemSelected(MenuItem item) {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void showLogoutDialog() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getString(R.string.dialog_logout_title));
+            builder.setMessage(getString(R.string.dialog_logout));
+            builder.setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    presenter.onLogoutOkClick();
+                }
+            });
+            builder.setNegativeButton(getString(R.string.dialog_no), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
     }
 
 }

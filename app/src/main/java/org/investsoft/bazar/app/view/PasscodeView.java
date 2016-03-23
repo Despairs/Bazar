@@ -10,4 +10,6 @@ public interface PasscodeView {
     public void showError();
 
     public void navigateToWorkflow(boolean onlyFinish);
+
+    public void showLogoutDialog();
 }
