@@ -24,7 +24,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         super.onBackPressed();
-        return super.onMenuItemSelected(featureId, item);
+        return true;
+//        return super.onMenuItemSelected(featureId, item);
     }
 
     @Override

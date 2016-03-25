@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single"
+    <group android:checkableBehavior="none"
         android:id="@+id/menu_workflow_group_common">
         <item
             android:id="@+id/menu_workflow_main"
-            android:title="@string/main" />
+            android:title="@string/main"
+            android:icon="@drawable/ic_home_black_24dp"/>
     </group>
-    <group android:checkableBehavior="single"
+    <group android:checkableBehavior="none"
         android:id="@+id/menu_workflow_group_user">
         <item
             android:id="@+id/menu_workflow_about"
-            android:title="@string/about" />
+            android:title="@string/about"
+            android:icon="@drawable/ic_person_black_24dp"/>
     </group>
-    <group android:checkableBehavior="single"
+    <group android:checkableBehavior="none"
         android:id="@+id/menu_workflow_group_additional">
         <item
             android:id="@+id/menu_workflow_preferences"
@@ -20,7 +22,7 @@
             android:title="@string/preferences" />
         <item
             android:id="@+id/menu_workflow_logout"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
             android:title="@string/logout" />
     </group>
 
