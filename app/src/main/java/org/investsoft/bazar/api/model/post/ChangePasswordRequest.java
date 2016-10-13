@@ -1,11 +1,14 @@
 package org.investsoft.bazar.api.model.post;
 
-import org.investsoft.bazar.api.model.base.HttpPostRequest;
+import org.investsoft.bazar.R;
+import org.investsoft.bazar.api.model.HttpRequest;
+import org.investsoft.bazar.api.model.HttpRequestType;
 
 /**
  * Created by Despairs on 15.01.16.
  */
-public class ChangePasswordRequest extends HttpPostRequest {
+@HttpRequest(requestType = HttpRequestType.POST, methodId = R.string.api_password)
+public class ChangePasswordRequest {
 
     private String sessionId;
     private String oldPassword;

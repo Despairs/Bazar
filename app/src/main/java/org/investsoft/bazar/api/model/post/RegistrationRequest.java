@@ -1,11 +1,14 @@
 package org.investsoft.bazar.api.model.post;
 
-import org.investsoft.bazar.api.model.base.HttpPostRequest;
+import org.investsoft.bazar.R;
+import org.investsoft.bazar.api.model.HttpRequest;
+import org.investsoft.bazar.api.model.HttpRequestType;
 
 /**
  * Created by Despairs on 15.01.16.
  */
-public class RegistrationRequest extends HttpPostRequest {
+@HttpRequest(requestType = HttpRequestType.POST, methodId = R.string.api_user_action)
+public class RegistrationRequest {
 
     private String phone;
     private String name;

@@ -1,11 +1,14 @@
 package org.investsoft.bazar.api.model.get;
 
-import org.investsoft.bazar.api.model.base.HttpGetRequest;
+import org.investsoft.bazar.R;
+import org.investsoft.bazar.api.model.HttpRequest;
+import org.investsoft.bazar.api.model.HttpRequestType;
 
 /**
  * Created by Despairs on 15.01.16.
  */
-public class GetUserInfoRequest extends HttpGetRequest {
+@HttpRequest(requestType= HttpRequestType.GET, methodId= R.string.api_user_action)
+public class GetUserInfoRequest {
 
     private String sessionId;
     private String userId;
@@ -31,11 +34,4 @@ public class GetUserInfoRequest extends HttpGetRequest {
         this.userId = userId;
     }
 
-    @Override
-    public String getUrlParameters() {
-        return "?"
-                .concat("sessionId=").concat(sessionId)
-                .concat("&")
-                .concat("userId=").concat(userId != null && !userId.isEmpty() ? userId : "");
-    }
 }

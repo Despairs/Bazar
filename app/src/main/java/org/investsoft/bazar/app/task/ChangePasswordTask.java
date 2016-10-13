@@ -4,10 +4,7 @@ import android.os.AsyncTask;
 
 import org.investsoft.bazar.api.ApiClient;
 import org.investsoft.bazar.api.model.base.ApiException;
-import org.investsoft.bazar.api.model.base.ApiResponse;
 import org.investsoft.bazar.api.model.post.ChangePasswordRequest;
-import org.investsoft.bazar.api.model.post.LoginRequest;
-import org.investsoft.bazar.api.model.post.LoginResponse;
 import org.investsoft.bazar.app.task.model.AsyncTaskResponse;
 import org.investsoft.bazar.app.task.model.LoginTaskResponse;
 import org.investsoft.bazar.utils.UserConfig;

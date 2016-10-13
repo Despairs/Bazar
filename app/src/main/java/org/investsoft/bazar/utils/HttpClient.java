@@ -7,6 +7,7 @@ import android.os.Build;
 import android.util.Log;
 
 import org.apache.commons.io.IOUtils;
+import org.investsoft.bazar.api.model.HttpRequestType;
 import org.investsoft.bazar.api.model.base.ApiException;
 
 import java.io.DataInputStream;
@@ -21,10 +22,6 @@ import java.net.URL;
  */
 public class HttpClient {
 
-    public enum HttpRequestType {
-        POST, GET, PUT
-    }
-
     private final String url;
 
     public HttpClient(String url) {
@@ -32,21 +29,9 @@ public class HttpClient {
         this.url = url;
     }
 
-    public String sendPostRequest(String request) throws ApiException {
-        return sendRequest(request, HttpRequestType.POST);
-    }
-
-    public String sendPutRequest(String request) throws ApiException {
-        return sendRequest(request, HttpRequestType.PUT);
-    }
-
-    public String sendGetRequest() throws ApiException {
-        return sendRequest(null, HttpRequestType.GET);
-    }
-
     //@TODO TargetAPI..
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private String sendRequest(String request, HttpRequestType methodType) throws ApiException {
+    public String sendRequest(String request, HttpRequestType methodType) throws ApiException {
         String response = null;
         Long start = System.currentTimeMillis();
         Log.i("BAZAR", "Send " + methodType.toString() + " request: " + request);
