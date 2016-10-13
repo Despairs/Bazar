@@ -1,16 +1,19 @@
 package org.investsoft.bazar.api.model.post;
 
-import org.investsoft.bazar.api.model.base.HttpPostRequest;
+import org.investsoft.bazar.R;
+import org.investsoft.bazar.api.model.HttpRequest;
+import org.investsoft.bazar.api.model.HttpRequestType;
 
 /**
  * Created by Despairs on 15.01.16.
  */
-public class LoginRequest extends HttpPostRequest {
+@HttpRequest(requestType = HttpRequestType.POST, methodId = R.string.api_login)
+public class LoginRequest {
 
     private String login;
     private String password;
 
-    public LoginRequest (String login, String password) {
+    public LoginRequest(String login, String password) {
         this.login = login;
         this.password = password;
     }
